@@ -4,40 +4,45 @@ import { takeLatest } from 'redux-saga/effects';
 import createRequestSaga, {
   createRequestActionTypes,
 } from '../lib/createRequestSaga';
-import * as api from '../lib/api';
-// 액션 타입 생성
-const CHANGE_FILED = 'auth/CHANGE_FILED';
-const INITIALIZE_FORM = 'auth/INITIALIZE_FORM';
+import * as authAPI from '../lib/api/auth';
 
-// 함수를 이용한 타입 생성
+const CHANGE_FIELD = 'auth/CHANGE_FIELD';
+const INITIALIZE_FORM = 'auth/INITIALIZE_FORM';
 
 const [REGISTER, REGISTER_SUCCESS, REGISTER_FAILURE] = createRequestActionTypes(
   'auth/REGISTER',
 );
 
-const [LOGIN, LOGIN_SUCCESS, LOGIN_FAILURE] = createAction('auth/LOGIN');
+const [LOGIN, LOGIN_SUCCESS, LOGIN_FAILURE] = createRequestActionTypes(
+  'auth/LOGIN',
+);
 
-export const changeFiled = createAction(
-  CHANGE_FILED,
+export const changeField = createAction(
+  CHANGE_FIELD,
   ({ form, key, value }) => ({
-    form, //register, login
-    key, //username, passowrd, passwordcomfirm
-    value, //실제 바꾸려는 값
+    form, // register , login
+    key, // username, password, passwordConfirm
+    value, // 실제 바꾸려는 값
   }),
 );
-export const intializeForm = createAction(INITIALIZE_FORM, (form) => form);
-//register, login
-
+export const initializeForm = createAction(INITIALIZE_FORM, (form) => form); // register / login
 export const register = createAction(REGISTER, ({ username, password }) => ({
   username,
   password,
 }));
-
 export const login = createAction(LOGIN, ({ username, password }) => ({
   username,
   password,
 }));
-// 초기상태 부 (auth, authError 설정하여서 인증 에러 잡아내기)
+
+// saga 생성
+const registerSaga = createRequestSaga(REGISTER, authAPI.register);
+const loginSaga = createRequestSaga(LOGIN, authAPI.login);
+export function* authSaga() {
+  yield takeLatest(REGISTER, registerSaga);
+  yield takeLatest(LOGIN, loginSaga);
+}
+
 const initialState = {
   register: {
     username: '',
@@ -46,51 +51,41 @@ const initialState = {
   },
   login: {
     username: '',
-    passoword: '',
+    password: '',
   },
   auth: null,
   authError: null,
 };
 
-// 사가 생성
-
-const registerSaga = createRequestSaga(REGISTER, api.register);
-const loginSaga = createRequestSaga(LOGIN, api.login);
-export function* authSaga() {
-  yield takeLatest(registerSaga);
-  yield takeLatest(loginSaga);
-}
-
 const auth = handleActions(
   {
-    // 타이핑
-    [CHANGE_FILED]: (state, { payload: { form, key, value } }) =>
+    [CHANGE_FIELD]: (state, { payload: { form, key, value } }) =>
       produce(state, (draft) => {
-        draft[form][key] = value;
-        // state.register.username 바꿈
+        draft[form][key] = value; // 예: state.register.username을 바꾼다
       }),
-    // 화면 전환 : 새페이지
     [INITIALIZE_FORM]: (state, { payload: form }) => ({
       ...state,
       [form]: initialState[form],
       authError: null, // 폼 전환 시 회원 인증 에러 초기화
     }),
-    // 회원가입
+    // 회원가입 성공
     [REGISTER_SUCCESS]: (state, { payload: auth }) => ({
       ...state,
       authError: null,
       auth,
     }),
+    // 회원가입 실패
     [REGISTER_FAILURE]: (state, { payload: error }) => ({
       ...state,
       authError: error,
     }),
-    // 로그인 부
+    // 로그인 성공
     [LOGIN_SUCCESS]: (state, { payload: auth }) => ({
       ...state,
       authError: null,
       auth,
     }),
+    // 로그인 실패
     [LOGIN_FAILURE]: (state, { payload: error }) => ({
       ...state,
       authError: error,

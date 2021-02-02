@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { changeFiled, intializeForm } from '../../modules/auth';
+import { changeField, initializeForm } from '../../modules/auth';
 import AuthForm from '../../components/auth/AuthForm';
 
 const LoginForm = () => {
@@ -12,7 +12,7 @@ const LoginForm = () => {
   const onChange = (e) => {
     const { value, name } = e.target;
     dispatch(
-      changeFiled({
+      changeField({
         form: 'login',
         key: name,
         value,
@@ -28,7 +28,7 @@ const LoginForm = () => {
 
   // 컴포넌트 처음 랜더링 시 form 초기화
   useEffect(() => {
-    dispatch(intializeForm('login'));
+    dispatch(initializeForm('login'));
   }, [dispatch]);
   return (
     <AuthForm

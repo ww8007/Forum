@@ -10,13 +10,13 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import createSagaMiddleWare from 'redux-saga';
 import rootReducer, { rootSaga } from './modules';
 
-const sagaMiddleWare = createSagaMiddleWare();
+const sagaMiddleware = createSagaMiddleWare();
 const store = createStore(
   rootReducer,
-  composeWithDevTools(applyMiddleware(sagaMiddleWare)),
+  composeWithDevTools(applyMiddleware(sagaMiddleware)),
 );
 
-sagaMiddleWare.run(rootSaga);
+sagaMiddleware.run(rootSaga);
 
 ReactDOM.render(
   <React.StrictMode>
