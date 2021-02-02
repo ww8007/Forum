@@ -5,11 +5,18 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import { createStore } from 'redux';
+import { applyMiddleware, createStore } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
-import rootReducer from './modules';
+import createSagaMiddleWare from 'redux-saga';
+import rootReducer, { rootSaga } from './modules';
 
-const store = createStore(rootReducer, composeWithDevTools());
+const sagaMiddleWare = createSagaMiddleWare();
+const store = createStore(
+  rootReducer,
+  composeWithDevTools(applyMiddleware(sagaMiddleWare)),
+);
+
+sagaMiddleWare.run(rootSaga);
 
 ReactDOM.render(
   <React.StrictMode>

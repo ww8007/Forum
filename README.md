@@ -58,3 +58,7 @@ rootReducer와 reducer생성 후 index.js 에서 모든 설정 파일과 스토�
 파일 자동 저장 잘하기
 
 ### 리덕스로 폼 상태 관리하기
+
+### API 연동하기
+
+yarn add axios redux-saga
