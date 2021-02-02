@@ -1,14 +1,42 @@
 import { createAction, handleActions } from 'redux-actions';
+import produce from 'immer';
+const CHANGE_FILED = 'auth/CHANGE_FILED';
+const INITIALIZE_FORM = 'auth/INITIALIZE_FORM';
 
-const SAMPLE_ACTION = 'auth/SAMPLE_ACTION';
+export const changeFiled = createAction(
+  CHANGE_FILED,
+  ({ form, key, value }) => ({
+    form, //register, login
+    key, //username, passowrd, passwordcomfirm
+    value, //실제 바꾸려는 값
+  }),
+);
+export const intializeForm = createAction(INITIALIZE_FORM, (form) => form);
+//register, login
 
-export const sampleAction = createAction(SAMPLE_ACTION);
-
-const initialState = {};
+const initialState = {
+  register: {
+    username: '',
+    password: '',
+    passwordConfirm: '',
+  },
+  login: {
+    username: '',
+    passoword: '',
+  },
+};
 
 const auth = handleActions(
   {
-    [SAMPLE_ACTION]: (state, action) => state,
+    [CHANGE_FILED]: (state, { payload: { form, key, value } }) =>
+      produce(state, (draft) => {
+        draft[form][key] = value;
+        // state.register.username 바꿈
+      }),
+    [INITIALIZE_FORM]: (state, { payload: form }) => ({
+      ...state,
+      [form]: initialState[form],
+    }),
   },
   initialState,
 );
