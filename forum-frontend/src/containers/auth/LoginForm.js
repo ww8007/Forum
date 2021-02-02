@@ -1,12 +1,17 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { changeField, initializeForm } from '../../modules/auth';
+import { withRouter } from 'react-router-dom';
+import { changeField, initializeForm, login } from '../../modules/auth';
 import AuthForm from '../../components/auth/AuthForm';
-
-const LoginForm = () => {
+import { check } from '../../modules/user';
+const LoginForm = ({ history }) => {
+  const [error, setError] = useState(null);
   const dispatch = useDispatch();
-  const { form } = useSelector(({ auth }) => ({
+  const { form, auth, authError, user } = useSelector(({ auth, user }) => ({
     form: auth.login,
+    auth: auth.auth,
+    authError: auth.authError,
+    user: user.user,
   }));
   // 인풋 변경 핸들러
   const onChange = (e) => {
@@ -23,21 +28,46 @@ const LoginForm = () => {
   // 폼 등록 핸들러
   const onSubmit = (e) => {
     e.preventDefault();
-    //구현 예정
+    const { username, password } = form;
+    dispatch(login({ username, password }));
   };
 
   // 컴포넌트 처음 랜더링 시 form 초기화
   useEffect(() => {
     dispatch(initializeForm('login'));
   }, [dispatch]);
+
+  useEffect(() => {
+    if (authError) {
+      console.log('오류 발생');
+      console.log(authError);
+      setError('로그인 실패');
+      return;
+    }
+    if (auth) {
+      console.log('로그인 성공');
+      console.log(auth);
+      dispatch(check());
+    }
+  }, [auth, authError, dispatch]);
+  // 유저 값 잘들어갔는지 확인
+  useEffect(() => {
+    if (user) {
+      console.log('check API 성공');
+      console.log(user);
+      history.push('/');
+    }
+  }, [history, user]);
+
   return (
     <AuthForm
       type="login"
       form={form}
       onChange={onChange}
       onSubmit={onSubmit}
+      error={error}
     ></AuthForm>
   );
 };
 
-export default LoginForm;
+export default withRouter(LoginForm);

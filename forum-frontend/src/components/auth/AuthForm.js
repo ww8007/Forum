@@ -44,6 +44,14 @@ const Footer = styled.div`
   }
 `;
 
+// 에러 메세지
+const ErrorMessage = styled.div`
+  color: red;
+  text-align: center;
+  font-size: 0.875rem;
+  margin-top: 1rem;
+`;
+
 const ButtonWithMarginTop = styled(Button)`
   margin-top: 1rem;
 `;
@@ -85,6 +93,17 @@ const AuthForm = ({ type, form, onChange, onSubmit }) => {
             value={form.passwordConfirm}
           />
         )}
+        {type === 'register' && (
+          <StyledInput
+            autoComplete="email"
+            name="email"
+            placeholder="이메일 입력"
+            type="email"
+            onChange={onChange}
+            value={form.email}
+          />
+        )}
+        <ErrorMessage>에러 발생!</ErrorMessage>
         <ButtonWithMarginTop cyan fullWidth>
           {text}
         </ButtonWithMarginTop>

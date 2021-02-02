@@ -1,9 +1,12 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { changeField, initializeForm, register } from '../../modules/auth';
 import AuthForm from '../../components/auth/AuthForm';
 import { check } from '../../modules/user';
-const RegisterForm = () => {
+import { withRouter } from 'react-router-dom';
+
+const RegisterForm = ({ history }) => {
+  const [error, setError] = useState(null);
   const dispatch = useDispatch();
   const { form, auth, authError, user } = useSelector(({ auth, user }) => ({
     form: auth.register,
@@ -57,8 +60,9 @@ const RegisterForm = () => {
     if (user) {
       console.log('check API 성공');
       console.log(user);
+      history.push('/');
     }
-  }, [user]);
+  }, [history, user]);
   return (
     <AuthForm
       type="register"
@@ -69,4 +73,4 @@ const RegisterForm = () => {
   );
 };
 
-export default RegisterForm;
+export default withRouter(RegisterForm);

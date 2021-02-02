@@ -1,8 +1,8 @@
 import client from './client';
-import qs from 'query-string';
+
 // 로그인
 export const login = ({ username, password }) =>
-  client.post('/api/auth/login', qs.stringify({ username, password }));
+  client.post('/api/auth/login', { username, password });
 
 // 회원가입
 export const register = ({ username, password }) =>
