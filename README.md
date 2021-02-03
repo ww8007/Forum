@@ -106,3 +106,10 @@ checkFailureSaga를 만들어서 사용한다
 
 로그아웃 api를 호출하여서 사용하면 된다.
 localStorage 에 있는 유저 값을 없애주면 된다.
+
+### 글쓰기
+
+에디터
+yarn add quill
+
+### 에디터 하단 컴포넌트 UI 구성하기
