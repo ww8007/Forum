@@ -30,8 +30,17 @@ const RegisterForm = ({ history }) => {
   const onSubmit = (e) => {
     e.preventDefault();
     const { username, password, passwordConfirm } = form;
+    if ([username, password, passwordConfirm].includes('')) {
+      setError('빈칸을 입력하세요.');
+      return;
+    }
     if (password !== passwordConfirm) {
       //비밀번호 맞지 않음
+      setError('비밀번호가 일치 하지 않습니다.');
+      dispatch(changeField({ form: 'register', key: password, value: '' }));
+      dispatch(
+        changeField({ form: 'register', key: passwordConfirm, value: '' }),
+      );
       return;
     }
     dispatch(register({ username, password }));
@@ -45,8 +54,12 @@ const RegisterForm = ({ history }) => {
   // 회원가입 성공/실패 처리
   useEffect(() => {
     if (authError) {
-      console.log('오류 발생');
-      console.log(authError);
+      if (authError.response.status === 409) {
+        setError('이미 존재하는 계정 입니다.');
+        return;
+      }
+      //기타 오류
+      setError('회원가입 실패');
       return;
     }
     if (auth) {
@@ -61,6 +74,11 @@ const RegisterForm = ({ history }) => {
       console.log('check API 성공');
       console.log(user);
       history.push('/');
+      try {
+        localStorage.setItem('user', JSON.stringify(user));
+      } catch (e) {
+        console.log('localStorage is not working');
+      }
     }
   }, [history, user]);
   return (
@@ -69,6 +87,7 @@ const RegisterForm = ({ history }) => {
       form={form}
       onChange={onChange}
       onSubmit={onSubmit}
+      error={error}
     ></AuthForm>
   );
 };

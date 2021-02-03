@@ -61,7 +61,7 @@ const textMap = {
   register: '회원가입',
 };
 
-const AuthForm = ({ type, form, onChange, onSubmit }) => {
+const AuthForm = ({ type, form, onChange, onSubmit, error }) => {
   const text = textMap[type];
 
   return (
@@ -103,7 +103,7 @@ const AuthForm = ({ type, form, onChange, onSubmit }) => {
             value={form.email}
           />
         )}
-        <ErrorMessage>에러 발생!</ErrorMessage>
+        {error && <ErrorMessage>{error}</ErrorMessage>}
         <ButtonWithMarginTop cyan fullWidth>
           {text}
         </ButtonWithMarginTop>
