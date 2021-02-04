@@ -1,14 +1,14 @@
 import React, { useCallback, useEffect } from 'react';
-import Editor from '../../components/write';
+import Editor from '../../components/write/Editor';
 import { useSelector, useDispatch } from 'react-redux';
-import { changeField, initialize } from '../../modules/write';
+import { initialize, changeField } from '../../modules/write';
 const EditorContainer = () => {
   const dispatch = useDispatch();
   const { title, body } = useSelector(({ write }) => ({
     title: write.title,
     body: write.body,
   }));
-  const onChagneField = useCallback(
+  const onChangeField = useCallback(
     (payload) => dispatch(changeField(payload)),
     [dispatch],
   );
@@ -19,7 +19,7 @@ const EditorContainer = () => {
     };
   }, [dispatch]);
   return (
-    <Editor onChagneField={onChagneField} title={title} body={body}></Editor>
+    <Editor onChangeField={onChangeField} title={title} body={body}></Editor>
   );
 };
 

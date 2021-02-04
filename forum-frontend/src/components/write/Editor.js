@@ -34,7 +34,7 @@ const QuillWrapper = styled.div`
   }
 `;
 
-const Editor = () => {
+const Editor = ({ title, body, onChangeField }) => {
   const quillElemnet = useRef(null); //Quill 적용할 divelement 지정
   const quillInstance = useRef(null); // quill 인스턴스 지정
 
@@ -53,10 +53,27 @@ const Editor = () => {
         ],
       },
     });
-  }, []);
+    //quill에 text-change 이벤트 핸들러 등록
+    const quill = quillInstance.current;
+    quill.on('text-change', (delta, oldDelta, source) => {
+      if (source === 'user') {
+        onChangeField({ key: 'body', value: quill.root.innerHTML });
+      }
+    });
+  }, [onChangeField]);
+
+  // quill에 text-change 이벤트 핸들러 등록
+
+  const onChangeTitle = (e) => {
+    onChangeField({ key: 'title', value: e.target.value });
+  };
   return (
     <EdierBlock>
-      <TitleInput placeholder="제목을 입력하세요." />
+      <TitleInput
+        placeholder="제목을 입력하세요."
+        onChange={onChangeTitle}
+        value={title}
+      />
       <QuillWrapper>
         <div ref={quillElemnet} />
       </QuillWrapper>
