@@ -13,7 +13,3 @@ export const check = () => client.get('/api/auth/check');
 
 // 로그아웃
 export const logout = () => client.post('/api/auth/logout');
-
-//글쓰기
-export const writePost = ({ title, body, tags }) =>
-  client.post('/api/auth/posts', { title, body, tags });

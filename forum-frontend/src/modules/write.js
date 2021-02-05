@@ -1,6 +1,6 @@
 import { handleActions, createAction } from 'redux-actions';
 import { takeLatest } from 'redux-saga/effects';
-import * as api from '../lib/api/auth';
+import * as api from '../lib/api/posts';
 import createRequestSaga, {
   createRequestActionTypes,
 } from '../lib/createRequestSaga';
@@ -26,6 +26,7 @@ export const writePost = createAction(WRITE_POST, ({ title, body, tags }) => ({
 }));
 
 const wirtePostSaga = createRequestSaga(WRITE_POST, api.writePost);
+
 export function* wrtieSaga() {
   yield takeLatest(WRITE_POST, wirtePostSaga);
 }
