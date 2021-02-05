@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import WriteActionButtons from '../../components/write/WriteActionButtons';
+import { useSelector, useDispatch } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { writePost } from '../../modules/write';
 
@@ -24,12 +24,13 @@ const WriteActionButtonsContainer = ({ history }) => {
       }),
     );
   };
+
   // 취소
-  const onCancle = () => {
+  const onCancel = () => {
     history.goBack();
   };
 
-  // 성공 혹은 실패 시 작업
+  // 성공 혹은 실패시 할 작업
   useEffect(() => {
     if (post) {
       const { _id, user } = post;
@@ -39,12 +40,7 @@ const WriteActionButtonsContainer = ({ history }) => {
       console.log(postError);
     }
   }, [history, post, postError]);
-  return (
-    <WriteActionButtons
-      onPublish={onPublish}
-      onCancle={onCancle}
-    ></WriteActionButtons>
-  );
+  return <WriteActionButtons onPublish={onPublish} onCancel={onCancel} />;
 };
 
 export default withRouter(WriteActionButtonsContainer);

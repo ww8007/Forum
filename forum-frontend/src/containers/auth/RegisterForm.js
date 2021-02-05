@@ -14,7 +14,7 @@ const RegisterForm = ({ history }) => {
     authError: auth.authError,
     user: user.user,
   }));
-  // 인풋 변경 핸들러
+  // 인풋 변경 이벤트 핸들러
   const onChange = (e) => {
     const { value, name } = e.target;
     dispatch(
@@ -26,54 +26,56 @@ const RegisterForm = ({ history }) => {
     );
   };
 
-  // 폼 등록 핸들러
+  // 폼 등록 이벤트 핸들러
   const onSubmit = (e) => {
     e.preventDefault();
     const { username, password, passwordConfirm } = form;
+    // 하나라도 비어있다면
     if ([username, password, passwordConfirm].includes('')) {
-      setError('빈칸을 입력하세요.');
+      setError('빈 칸을 모두 입력하세요.');
       return;
     }
+    // 비밀번호가 일치하지 않는다면
     if (password !== passwordConfirm) {
-      //비밀번호 맞지 않음
-      setError('비밀번호가 일치 하지 않습니다.');
-      dispatch(changeField({ form: 'register', key: password, value: '' }));
+      setError('비밀번호가 일치하지 않습니다.');
+      dispatch(changeField({ form: 'register', key: 'password', value: '' }));
       dispatch(
-        changeField({ form: 'register', key: passwordConfirm, value: '' }),
+        changeField({ form: 'register', key: 'passwordConfirm', value: '' }),
       );
       return;
     }
     dispatch(register({ username, password }));
   };
 
-  // 컴포넌트 처음 랜더링 시 form 초기화
+  // 컴포넌트가 처음 렌더링 될 때 form 을 초기화함
   useEffect(() => {
     dispatch(initializeForm('register'));
   }, [dispatch]);
 
-  // 회원가입 성공/실패 처리
+  // 회원가입 성공 / 실패 처리
   useEffect(() => {
     if (authError) {
+      // 계정명이 이미 존재할 때
       if (authError.response.status === 409) {
-        setError('이미 존재하는 계정 입니다.');
+        setError('이미 존재하는 계정명입니다.');
         return;
       }
-      //기타 오류
+      // 기타 이유
       setError('회원가입 실패');
       return;
     }
+
     if (auth) {
       console.log('회원가입 성공');
       console.log(auth);
       dispatch(check());
     }
   }, [auth, authError, dispatch]);
-  // 유저 값 잘들어갔는지 확인
+
+  // user 값이 잘 설정되었는지 확인
   useEffect(() => {
     if (user) {
-      console.log('check API 성공');
-      console.log(user);
-      history.push('/');
+      history.push('/'); // 홈 화면으로 이동
       try {
         localStorage.setItem('user', JSON.stringify(user));
       } catch (e) {
@@ -81,6 +83,7 @@ const RegisterForm = ({ history }) => {
       }
     }
   }, [history, user]);
+
   return (
     <AuthForm
       type="register"
@@ -88,7 +91,7 @@ const RegisterForm = ({ history }) => {
       onChange={onChange}
       onSubmit={onSubmit}
       error={error}
-    ></AuthForm>
+    />
   );
 };
 

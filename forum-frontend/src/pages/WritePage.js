@@ -9,7 +9,7 @@ const WritePage = () => {
     <Responsive>
       <EditorContainer />
       <TagBoxContainer />
-      <WriteActionButtonsContainer></WriteActionButtonsContainer>
+      <WriteActionButtonsContainer />
     </Responsive>
   );
 };

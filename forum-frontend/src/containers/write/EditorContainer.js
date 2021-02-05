@@ -1,7 +1,8 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import Editor from '../../components/write/Editor';
 import { useSelector, useDispatch } from 'react-redux';
-import { initialize, changeField } from '../../modules/write';
+import { changeField, initialize } from '../../modules/write';
+
 const EditorContainer = () => {
   const dispatch = useDispatch();
   const { title, body } = useSelector(({ write }) => ({
@@ -12,15 +13,13 @@ const EditorContainer = () => {
     (payload) => dispatch(changeField(payload)),
     [dispatch],
   );
-  //언마운트 될 때 초기화
+  // 언마운트될 때 초기화
   useEffect(() => {
     return () => {
       dispatch(initialize());
     };
   }, [dispatch]);
-  return (
-    <Editor onChangeField={onChangeField} title={title} body={body}></Editor>
-  );
+  return <Editor onChangeField={onChangeField} title={title} body={body} />;
 };
 
 export default EditorContainer;

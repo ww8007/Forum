@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import Button from '../common/Button';
 
-const WriteActionButtonBlock = styled.div`
+const WriteActionButtonsBlock = styled.div`
   margin-top: 1rem;
   margin-bottom: 3rem;
   button + button {
@@ -10,6 +10,7 @@ const WriteActionButtonBlock = styled.div`
   }
 `;
 
+/* TagBox에서 사용하는 버튼과 일치하는 높이로 설정 후 서로 간의 여백 지정 */
 const StyledButton = styled(Button)`
   height: 2.125rem;
   & + & {
@@ -17,14 +18,14 @@ const StyledButton = styled(Button)`
   }
 `;
 
-const WriteActionButtons = ({ onCancle, onPublish }) => {
+const WriteActionButtons = ({ onCancel, onPublish }) => {
   return (
-    <WriteActionButtonBlock>
+    <WriteActionButtonsBlock>
       <StyledButton cyan onClick={onPublish}>
         포스트 등록
       </StyledButton>
-      <StyledButton onClick={onCancle}>취소</StyledButton>
-    </WriteActionButtonBlock>
+      <StyledButton onClick={onCancel}>취소</StyledButton>
+    </WriteActionButtonsBlock>
   );
 };
 

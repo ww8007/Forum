@@ -115,3 +115,13 @@ yarn add quill
 ### 에디터 하단 컴포넌트 UI 구성하기
 
 ### 리덕스로 글쓰기 상태 관리하기
+
+### 날짜 나타내기
+
+publishedData로 꼭 명시해서 사용해야 한다.
+다른 이름으로 사용하면 오류 생김
+이유는 아직은 모르겟음
+
+### HTML 필터링 하기
+
+yarn add sanitize-html

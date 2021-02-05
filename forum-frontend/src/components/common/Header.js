@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 import Responsive from './Responsive';
 import Button from './Button';
-import { Link } from 'react-router-dom';
 
 const HeaderBlock = styled.div`
   position: fixed;
@@ -11,13 +11,14 @@ const HeaderBlock = styled.div`
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.08);
 `;
 
-// Responsive 컴포넌트의 속성에 스타일 추가하여 새로운 컴포넌트 작성
-
+/**
+ * Responsive 컴포넌트의 속성에 스타일을 추가해서 새로운 컴포넌트 생성
+ */
 const Wrapper = styled(Responsive)`
   height: 4rem;
   display: flex;
   align-items: center;
-  justify-content: space-between; // 자식 엘리먼트 사이 여백 최;대
+  justify-content: space-between; /* 자식 엘리먼트 사이에 여백을 최대로 설정 */
   .logo {
     font-size: 1.125rem;
     font-weight: 800;
@@ -29,15 +30,16 @@ const Wrapper = styled(Responsive)`
   }
 `;
 
+/**
+ * 헤더가 fixed로 되어 있기 때문에 페이지의 컨텐츠가 4rem 아래 나타나도록 해주는 컴포넌트
+ */
+const Spacer = styled.div`
+  height: 4rem;
+`;
+
 const UserInfo = styled.div`
   font-weight: 800;
   margin-right: 1rem;
-`;
-
-// 헤더가 fixed로 되어있기에 페이지의 콘텐츠가 4rem 밑에 나타나도록 해줌
-
-const Spacer = styled.div`
-  height: 4rem;
 `;
 
 const Header = ({ user, onLogout }) => {
