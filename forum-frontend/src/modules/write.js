@@ -1,28 +1,26 @@
-import { handleActions, createAction } from 'redux-actions';
-import { takeLatest } from 'redux-saga/effects';
-import * as api from '../lib/api/posts';
+import { createAction, handleActions } from 'redux-actions';
 import createRequestSaga, {
   createRequestActionTypes,
 } from '../lib/createRequestSaga';
+import * as api from '../lib/api/posts';
+import { takeLatest } from 'redux-saga/effects';
 
-const INITIALIZE = 'write/INITIALIZE';
-const CHANGE_FILELD = 'write/CHANGE_FILELD';
-const SET_ORIGINAL_POST = 'write/SET_ORIGINAL_POST';
-
+const INITIALIZE = 'write/INITIALIZE'; // 모든 내용 초기화
+const CHANGE_FIELD = 'write/CHANGE_FIELD'; // 특정 key 값 바꾸기
 const [
   WRITE_POST,
   WRITE_POST_SUCCESS,
   WRITE_POST_FAILURE,
-] = createRequestActionTypes('write/WRITE_POST');
-
+] = createRequestActionTypes('write/WRITE_POST'); // 포스트 작성
+const SET_ORIGINAL_POST = 'write/SET_ORIGINAL_POST';
 const [
   UPDATE_POST,
   UPDATE_POST_SUCCESS,
   UPDATE_POST_FAILURE,
-] = createRequestActionTypes('write/UPDATE_POST');
+] = createRequestActionTypes('write/UPDATE_POST'); // 포스트 수정
 
 export const initialize = createAction(INITIALIZE);
-export const changeField = createAction(CHANGE_FILELD, ({ key, value }) => ({
+export const changeField = createAction(CHANGE_FIELD, ({ key, value }) => ({
   key,
   value,
 }));
@@ -35,22 +33,23 @@ export const setOriginalPost = createAction(SET_ORIGINAL_POST, (post) => post);
 export const updatePost = createAction(
   UPDATE_POST,
   ({ id, title, body, tags }) => ({
+    id,
     title,
     body,
     tags,
-    id,
   }),
 );
 
-const wirtePostSaga = createRequestSaga(WRITE_POST, api.writePost);
-const updatePostSags = createRequestSaga(UPDATE_POST, api.updatePost);
+// saga 생성
+const writePostSaga = createRequestSaga(WRITE_POST, api.writePost);
+const updatePostSaga = createRequestSaga(UPDATE_POST, api.updatePost);
 
-export function* wrtieSaga() {
-  yield takeLatest(WRITE_POST, wirtePostSaga);
-  yield takeLatest(UPDATE_POST, updatePostSags);
+export function* writeSaga() {
+  yield takeLatest(WRITE_POST, writePostSaga);
+  yield takeLatest(UPDATE_POST, updatePostSaga);
 }
 
-const initalState = {
+const initialState = {
   title: '',
   body: '',
   tags: [],
@@ -61,20 +60,23 @@ const initalState = {
 
 const write = handleActions(
   {
-    [INITIALIZE]: (state) => initalState,
-    [CHANGE_FILELD]: (state, { payload: { key, value } }) => ({
+    [INITIALIZE]: (state) => initialState, // initialState를 넣으면 초기상태로 바뀜
+    [CHANGE_FIELD]: (state, { payload: { key, value } }) => ({
       ...state,
-      [key]: value,
+      [key]: value, // 특정 key 값을 업데이트
     }),
     [WRITE_POST]: (state) => ({
       ...state,
+      // post와 postError를 초기화
       post: null,
       postError: null,
     }),
+    // 포스트 작성 성공
     [WRITE_POST_SUCCESS]: (state, { payload: post }) => ({
       ...state,
       post,
     }),
+    // 포스트 작성 실패
     [WRITE_POST_FAILURE]: (state, { payload: postError }) => ({
       ...state,
       postError,
@@ -95,8 +97,7 @@ const write = handleActions(
       postError,
     }),
   },
-
-  initalState,
+  initialState,
 );
 
 export default write;

@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import Button from './Button';
 
-const fullScreen = styled.div`
+const FullScreen = styled.div`
   position: fixed;
   z-index: 30;
   top: 0;
@@ -34,7 +34,7 @@ const AskModalBlock = styled.div`
   }
 `;
 
-const styledButton = styled(Button)`
+const StyledButton = styled(Button)`
   height: 2rem;
   & + & {
     margin-left: 0.75rem;
@@ -52,18 +52,18 @@ const AskModal = ({
 }) => {
   if (!visible) return null;
   return (
-    <fullScreen>
+    <FullScreen>
       <AskModalBlock>
         <h2>{title}</h2>
         <p>{description}</p>
         <div className="buttons">
-          <styledButton onClick={onCancle}>{cancleText}</styledButton>
-          <styledButton cyan onClick={onConfirm}>
+          <StyledButton onClick={onCancle}>{cancleText}</StyledButton>
+          <StyledButton cyan onClick={onConfirm}>
             {confirmText}
-          </styledButton>
+          </StyledButton>
         </div>
       </AskModalBlock>
-    </fullScreen>
+    </FullScreen>
   );
 };
 
