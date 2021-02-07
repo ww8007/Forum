@@ -20,7 +20,7 @@ const Wrapper = styled(Responsive)`
   align-items: center;
   justify-content: space-between; /* 자식 엘리먼트 사이에 여백을 최대로 설정 */
   .logo {
-    font-size: 1.125rem;
+    font-size: 1.5rem;
     font-weight: 800;
     letter-spacing: 2px;
   }
@@ -42,6 +42,11 @@ const UserInfo = styled.div`
   margin-right: 1rem;
 `;
 
+const MenuList = styled(Link)`
+  font-weight: 800;
+  margin-right: 1rem;
+`;
+
 const Header = ({ user, onLogout }) => {
   return (
     <>
@@ -50,14 +55,21 @@ const Header = ({ user, onLogout }) => {
           <Link to="/" className="logo">
             REACTERS
           </Link>
+          <MenuList to="/">FORUM</MenuList>
+          <MenuList to="/login">BOARD</MenuList>
+          <MenuList>Q&A</MenuList>
           {user ? (
             <div className="right">
               <UserInfo>{user.username}</UserInfo>
-              <Button onClick={onLogout}>로그아웃</Button>
+              <Button cyan onClick={onLogout}>
+                로그아웃
+              </Button>
             </div>
           ) : (
             <div className="right">
-              <Button to="/login">로그인</Button>
+              <Button cyan to="/login">
+                로그인
+              </Button>
             </div>
           )}
         </Wrapper>

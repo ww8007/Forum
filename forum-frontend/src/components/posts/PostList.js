@@ -29,7 +29,7 @@ const PostItemBlock = styled.div`
   }
 
   h2 {
-    font-size: 2rem;
+    font-size: 1rem;
     margin-bottom: 0;
     margin-top: 0;
     &:hover {
@@ -37,23 +37,24 @@ const PostItemBlock = styled.div`
     }
   }
   p {
+    margin-right: 2rem;
     margin-top: 2rem;
   }
 `;
 
 const PostItem = ({ post }) => {
-  const { publishedDate, user, tags, title, body, _id } = post;
+  const { publishedDate, user, tags, title, _id } = post;
   return (
     <PostItemBlock>
       <h2>
         <Link to={`/@${user.username}/${_id}`}>{title}</Link>
       </h2>
+
       <SubInfo
         username={user.username}
         publishedDate={new Date(publishedDate)}
       />
       <Tags tags={tags} />
-      <p>{body}</p>
     </PostItemBlock>
   );
 };

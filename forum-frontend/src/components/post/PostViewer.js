@@ -19,6 +19,10 @@ const PostHead = styled.div`
   }
 `;
 
+const SubInfoinPost = styled(SubInfo)`
+  border: 1px solid ${palette.gray[2]};
+`;
+
 const PostContent = styled.div`
   font-size: 1.3125rem;
   color: ${palette.gray[8]};
@@ -42,8 +46,8 @@ const PostViewer = ({ post, error, loading, actionButtons }) => {
   return (
     <PostViewerBlock>
       <PostHead>
-        <h1>{title}</h1>
-        <SubInfo
+        <h1>제목 : {title}</h1>
+        <SubInfoinPost
           username={user.username}
           publishedDate={publishedDate}
           hasMarginTop
@@ -52,6 +56,14 @@ const PostViewer = ({ post, error, loading, actionButtons }) => {
       </PostHead>
       {actionButtons}
       <PostContent dangerouslySetInnerHTML={{ __html: body }} />
+      <div>
+        댓글
+        <ul>
+          <li>1</li>
+          <li>2</li>
+          <li>3</li>
+        </ul>
+      </div>
     </PostViewerBlock>
   );
 };

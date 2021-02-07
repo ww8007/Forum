@@ -9,26 +9,34 @@ const SubInfoBlock = styled.div`
     css`
       margin-top: 1rem;
     `}
-  color: ${palette.gray[6]};
+  color: black;
 
   /* span 사이에 가운뎃점 문자 보여주기*/
   span + span:before {
-    color: ${palette.gray[4]};
+    color: ${palette.gray[6]};
     padding-left: 0.25rem;
     padding-right: 0.25rem;
-    content: '\\B7'; /* 가운뎃점 문자 */
+  }
+  div {
+    display: block;
+  }
+  span {
+    display: flex;
   }
 `;
 
 const SubInfo = ({ username, publishedDate, hasMarginTop }) => {
   return (
     <SubInfoBlock hasMarginTop={hasMarginTop}>
-      <span>
-        <b>
-          <Link to={`/@${username}`}>{username}</Link>
-        </b>
-      </span>
-      <span>{new Date(publishedDate).toLocaleDateString()}</span>
+      <div>
+        <span>
+          <b>
+            <Link to={`/@${username}`}>작성자 : {username}</Link>
+          </b>
+        </span>
+        <span>작성일 : {new Date(publishedDate).toLocaleDateString()}</span>
+      </div>
+      <div>댓글개수 : 1</div>
     </SubInfoBlock>
   );
 };
