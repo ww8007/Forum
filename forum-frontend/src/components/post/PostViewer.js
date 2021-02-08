@@ -55,15 +55,18 @@ const PostViewer = ({ post, error, loading, actionButtons }) => {
         <Tags tags={tags} />
       </PostHead>
       {actionButtons}
+
       <PostContent dangerouslySetInnerHTML={{ __html: body }} />
-      <div>
-        댓글
-        <ul>
-          <li>1</li>
-          <li>2</li>
-          <li>3</li>
-        </ul>
-      </div>
+      <PostHead>
+        <div>
+          댓글
+          <ul>
+            <li>1</li>
+            <li>2</li>
+            <li>3</li>
+          </ul>
+        </div>
+      </PostHead>
     </PostViewerBlock>
   );
 };
