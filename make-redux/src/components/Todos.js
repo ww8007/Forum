@@ -39,7 +39,7 @@ const Todos = ({
           <button type="submit">등록</button>
         </form>
       </div>
-      {/* <div>
+      <div>
         {todos.map((todo) => (
           <TodoItem
             key={todo.id}
@@ -47,7 +47,7 @@ const Todos = ({
             onToggle={onToggle}
           ></TodoItem>
         ))}
-      </div> */}
+      </div>
     </>
   );
 };

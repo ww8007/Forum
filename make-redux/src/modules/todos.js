@@ -3,7 +3,7 @@ import { createAction, handleActions } from 'redux-actions';
 const CHANGE_INPUT = 'CHANGE_INPUT';
 const INSERT = 'INSERT';
 const TOGGLE = 'TOGGLE';
-const REMVOE = 'REMVOE';
+const REMOVE = 'REMVOE';
 
 export const changeInput = createAction(CHANGE_INPUT, (input) => input);
 let id = 3;
@@ -13,7 +13,7 @@ export const insert = createAction(INSERT, (text) => ({
   done: false,
 }));
 export const toggle = createAction(TOGGLE, (text) => text);
-export const remove = createAction(REMVOE, (text) => text);
+export const remove = createAction(REMOVE, (text) => text);
 
 const initialState = {
   input: '',
@@ -46,7 +46,7 @@ const todos = handleActions(
         todo.id === action.payload ? { ...todo, done: !todo.done } : todo,
       ),
     }),
-    [REMVOE]: (state, action) => ({
+    [REMOVE]: (state, action) => ({
       ...state,
       todos: state.todos.filter((todo) => todo.id !== action.payload),
     }),
