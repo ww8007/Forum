@@ -1,42 +1,42 @@
 import { createAction, handleActions } from 'redux-actions';
-import createRequestSaga, {
-  createRequestActionTypes,
-} from '../lib/createRequestSaga';
-import * as postsAPI from '../lib/api/posts';
-import { takeLatest } from 'redux-saga/effects';
 
-const [
-  READ_COMMENT,
-  READ_COMMENT_SUCCESS,
-  READ_COMMENT_FAILURE,
-] = createRequestActionTypes('comment/READ_COMMNET');
+const INSERT = 'comment/INSERT';
+const REMOVE = 'comment/REMOVE';
 
-const UNLOAD_COMMENT = 'comment/UNLOAD_POST';
+let id = 3;
 
-export const readComment = createAction(READ_COMMENT, (id) => id);
-export const unloadComment = createAction(UNLOAD_COMMENT);
-
-const readCommentSaga = createRequestSaga(READ_COMMENT, postsAPI.readComment);
-export function* commentSaga() {
-  yield takeLatest(READ_COMMENT, readCommentSaga);
-}
+export const insert = createAction(INSERT, (text) => ({
+  id: id++,
+  text,
+  postDate: new Date().toLocaleDateString(),
+}));
+export const remove = createAction(REMOVE, (id) => id);
 
 const initialState = {
-  comment: null,
-  error: null,
+  comments: [
+    {
+      id: 1,
+      text: '리덕스 기초 배우기',
+      postDate: new Date().toLocaleDateString(),
+    },
+    {
+      id: 2,
+      text: '안녕하세요',
+      postDate: new Date().toLocaleDateString(),
+    },
+  ],
 };
 
 const comment = handleActions(
   {
-    [READ_COMMENT_SUCCESS]: (state, { payload: comment }) => ({
+    [INSERT]: (state, { payload: text }) => ({
       ...state,
-      comment,
+      comments: state.comments.concat(text),
     }),
-    [READ_COMMENT_FAILURE]: (state, { payload: error }) => ({
+    [REMOVE]: (state, { payload: id }) => ({
       ...state,
-      error,
+      comments: state.comments.filter((todo) => todo.id !== id),
     }),
-    [UNLOAD_COMMENT]: () => initialState,
   },
   initialState,
 );

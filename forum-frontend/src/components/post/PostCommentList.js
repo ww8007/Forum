@@ -1,35 +1,73 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-
-const comments = [
-  {
-    id: 1,
-    comment: '좋아요',
-  },
-  {
-    id: 2,
-    comment: '싫어요',
-  },
-];
-// 전체 코멘트 블락
-const CommentListBlock = styled.div`
-  border: 1px solid black;
+import PostCommentItem from './PostCommentItem';
+import palette from '../../lib/styles/palette';
+const Input = styled.input`
+  resize: none;
+  padding: 1rem 1rem 1.5rem;
+  outline: none;
+  border: 1px solid rgb(233, 236, 239);
+  margin-bottom: 1.5rem;
+  width: 100%;
+  border-radius: 4px;
+  min-height: 6.125rem;
+  font-size: 1rem;
+  color: rgb(33, 37, 41);
+  line-height: 1.75;
 `;
-// 대댓글 기능
 
-const PostCommentList = () => {
-  const [check, setCheck] = useState(false);
-  function onToggle() {
-    return setCheck(!check);
+const Button = styled.button`
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  font-weight: bold;
+  padding: 0.25rem 1rem;
+  color: white;
+  outline: none;
+  cursor: pointer;
+  background: ${palette.cyan[5]};
+  &:hover {
+    background: ${palette.cyan[4]};
   }
+  float: right;
+`;
+
+const PostCommentList = ({ comments, onRemove, onInsert, user }) => {
+  const [text, setText] = useState('');
+  const onSubmit = (e) => {
+    e.preventDefault();
+    onInsert(text);
+    setText('');
+  };
+  const onChange = (e) => {
+    setText(e.target.value);
+  };
   return (
-    <CommentListBlock>
-      <ul>
+    <>
+      <form onSubmit={onSubmit}>
+        <Input
+          type="text"
+          value={text}
+          placeholder="댓글을 입력하세요."
+          onChange={onChange}
+        />
+        <Button cyan type={'submit'}>
+          등록
+        </Button>
+      </form>
+      <br />
+      <br />
+      <div>
         {comments.map((comment) => (
-          <li key={comment.id}>{comment}</li>
+          <PostCommentItem
+            key={comment.id}
+            onRemove={onRemove}
+            comment={comment}
+            user={user}
+          ></PostCommentItem>
         ))}
-      </ul>
-    </CommentListBlock>
+      </div>
+    </>
   );
 };
 

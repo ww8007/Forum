@@ -4,7 +4,7 @@ import palette from '../../lib/styles/palette';
 import Responsive from '../common/Responsive';
 import SubInfo from '../common/SubInfo';
 import Tags from '../common/Tags';
-
+import PostCommentContaner from '../../containers/post/PostCommentContaner';
 const PostViewerBlock = styled(Responsive)`
   margin-top: 4rem;
 `;
@@ -17,6 +17,13 @@ const PostHead = styled.div`
     line-height: 1.5;
     margin: 0;
   }
+`;
+
+const CommentHead = styled.div`
+  font-size: 2rem;
+  color: black;
+  margin-right: 0.5rem;
+  margin-bottom: 0.5rem;
 `;
 
 const SubInfoinPost = styled(SubInfo)`
@@ -55,17 +62,12 @@ const PostViewer = ({ post, error, loading, actionButtons }) => {
         <Tags tags={tags} />
       </PostHead>
       {actionButtons}
-
       <PostContent dangerouslySetInnerHTML={{ __html: body }} />
+      <PostHead />
+
       <PostHead>
-        <div>
-          댓글
-          <ul>
-            <li>1</li>
-            <li>2</li>
-            <li>3</li>
-          </ul>
-        </div>
+        <CommentHead>댓글</CommentHead>
+        <PostCommentContaner></PostCommentContaner>
       </PostHead>
     </PostViewerBlock>
   );
