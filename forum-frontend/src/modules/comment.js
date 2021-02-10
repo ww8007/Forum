@@ -16,12 +16,12 @@ const initialState = {
   comments: [
     {
       id: 1,
-      text: '리덕스 기초 배우기',
+      text: '정말 잘 봤어요!',
       postDate: new Date().toLocaleDateString(),
     },
     {
       id: 2,
-      text: '안녕하세요',
+      text: '감사합니다.',
       postDate: new Date().toLocaleDateString(),
     },
   ],

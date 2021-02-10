@@ -35,12 +35,13 @@ const PostCommentItem = ({ comment, onRemove, user }) => {
         Date: {comment.postDate} username: {user.username}
       </span>
       <hr />
-      <span>{comment.text}</span>
-      <hr />
-      <PostActionButtonBlock>
-        <ActionButton>수정</ActionButton>
-        <ActionButton onClick={() => onRemove(comment.id)}>삭제</ActionButton>
-      </PostActionButtonBlock>
+      <span>
+        {comment.text}
+        <PostActionButtonBlock>
+          <ActionButton>수정</ActionButton>
+          <ActionButton onClick={() => onRemove(comment.id)}>삭제</ActionButton>
+        </PostActionButtonBlock>
+      </span>
     </>
   );
 };

@@ -1,6 +1,6 @@
 import React from 'react';
 
-const PostCommentToggle = () => {
+const PostCommentToggle = ({ comment, onToggle }) => {
   return <div></div>;
 };
 
