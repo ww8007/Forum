@@ -1,9 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import palatte from '../../lib/styles/palette';
-const CommentItem = styled.div`
-  border: 1px solid red;
-`;
+
 const PostActionButtonBlock = styled.div`
   display: flex;
   justify-content: flex-end;
@@ -28,7 +26,33 @@ const ActionButton = styled.div`
   }
 `;
 
-const PostCommentItem = ({ comment, onRemove, user }) => {
+const Input = styled.input`
+  resize: none;
+  padding: 1rem 1rem 1.5rem;
+  outline: none;
+  border: 1px solid rgb(233, 236, 239);
+  margin-bottom: 1.5rem;
+  width: 100%;
+  border-radius: 4px;
+  min-height: 6.125rem;
+  font-size: 1rem;
+  color: rgb(33, 37, 41);
+  line-height: 1.75;
+`;
+
+const PostCommentItem = ({
+  comment,
+  onRemove,
+  user,
+  onSearch,
+  selectComment,
+  onToggle,
+}) => {
+  const [text, setText] = useState('');
+  const onChange = (e) => {
+    setText(e.target.value);
+  };
+
   return (
     <>
       <span>
@@ -38,9 +62,18 @@ const PostCommentItem = ({ comment, onRemove, user }) => {
       <span>
         {comment.text}
         <PostActionButtonBlock>
-          <ActionButton>수정</ActionButton>
+          <ActionButton
+            onClick={() => {
+              onSearch(comment.id);
+              console.log(selectComment);
+            }}
+          >
+            수정
+          </ActionButton>
           <ActionButton onClick={() => onRemove(comment.id)}>삭제</ActionButton>
         </PostActionButtonBlock>
+        {selectComment.id}
+        <br />
       </span>
     </>
   );

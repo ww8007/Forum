@@ -40,6 +40,7 @@ const PostActionButtons = ({ onEdit, onRemove }) => {
 
     onRemove();
   };
+ 
   return (
     <>
       <PostActionButtonBlock>

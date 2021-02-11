@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import PostCommentItem from './PostCommentItem';
 import palette from '../../lib/styles/palette';
+import { stringify } from 'qs';
 const Input = styled.input`
   resize: none;
   padding: 1rem 1rem 1.5rem;
@@ -32,7 +33,15 @@ const Button = styled.button`
   float: right;
 `;
 
-const PostCommentList = ({ comments, onRemove, onInsert, user }) => {
+const PostCommentList = ({
+  comments,
+  onRemove,
+  onInsert,
+  user,
+  onSearch,
+  selectComment,
+  onToggle,
+}) => {
   const [text, setText] = useState('');
   const onSubmit = (e) => {
     e.preventDefault();
@@ -48,7 +57,7 @@ const PostCommentList = ({ comments, onRemove, onInsert, user }) => {
         <Input
           type="text"
           value={text}
-          placeholder="댓글을 입력하세요."
+          placeholder="댓글을 입력하세요"
           onChange={onChange}
         />
         <Button cyan type={'submit'}>
@@ -63,7 +72,10 @@ const PostCommentList = ({ comments, onRemove, onInsert, user }) => {
             key={comment.id}
             onRemove={onRemove}
             comment={comment}
+            selectComment={selectComment}
             user={user}
+            onSearch={onSearch}
+            onToggle={onToggle}
           ></PostCommentItem>
         ))}
       </div>
