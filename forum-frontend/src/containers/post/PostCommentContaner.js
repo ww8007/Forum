@@ -15,10 +15,11 @@ const PostCommentContaner = () => {
     dispatch,
   ]);
   const onRemove = useCallback((id) => dispatch(remove(id)), [dispatch]);
-
-  const onSearch = useCallback((id) => dispatch(setOriginalPost(id)), [
-    dispatch,
-  ]);
+  const onToggle = useCallback((id) => dispatch(toggle(id)), [dispatch]);
+  const onSearch = useCallback(
+    (comment) => dispatch(setOriginalPost(comment)),
+    [dispatch],
+  );
 
   return (
     <PostCommentList
@@ -26,6 +27,7 @@ const PostCommentContaner = () => {
       onRemove={onRemove}
       onInsert={onInsert}
       onSearch={onSearch}
+      onToggle={onToggle}
       user={user}
       selectComment={selectComment}
     ></PostCommentList>

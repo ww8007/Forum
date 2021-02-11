@@ -4,6 +4,7 @@ const INSERT = 'comment/INSERT';
 const REMOVE = 'comment/REMOVE';
 const SET_ORIGINAL_COMMENT = 'comment/SET_ORIGINAL_COMMENT';
 const TOGGLE = 'comment/TOGGLE';
+const UPDATE_COMMNET = 'comment/UPDATE_COMMENT';
 let id = 3;
 
 export const insert = createAction(INSERT, (text) => ({
@@ -15,6 +16,10 @@ export const insert = createAction(INSERT, (text) => ({
 export const remove = createAction(REMOVE, (id) => id);
 export const setOriginalPost = createAction(SET_ORIGINAL_COMMENT, (id) => id);
 export const toggle = createAction(TOGGLE, (id) => id);
+export const updateComment = createAction(UPDATE_COMMNET, ({ id, text }) => ({
+  id,
+  text,
+}));
 
 const initialState = {
   comments: [
@@ -45,22 +50,24 @@ const comment = handleActions(
       ...state,
       comments: state.comments.filter((comment) => comment.id !== id),
     }),
-    [SET_ORIGINAL_COMMENT]: (state, { payload: id }) => ({
+    [SET_ORIGINAL_COMMENT]: (state, { payload: post }) => ({
       ...state,
-      selectComment: state.comments.filter((search) => search.id === id),
-      // id: selectComment.id,
-      // text: comment.text,
-      // postDate: new Date().toLocaleDateString(),
+      // selectComment: state.comments.filter((search) => search.id === id),
+      id: post.id,
+      text: post.text,
+      postDate: post.postDate,
     }),
     [TOGGLE]: (state, { payload: id }) => ({
       ...state,
-      selectComment: state.comments.map((comment) =>
-        comment.id === id ? { ...comment, edit: !comment.edit } : comment,
+      comments: state.comments.map((post) =>
+        post.id === id ? { ...post, edit: !post.edit } : post,
       ),
-      id: state.id,
-      text: state.text,
-      edit: state.edit,
-      postDate: new Date().toLocaleDateString(),
+    }),
+    [UPDATE_COMMNET]: (state, { payload: id, text }) => ({
+      ...state,
+      comments: state.comments.map((post) =>
+        post.id === id ? { ...post, text: post.text } : text,
+      ),
     }),
   },
   initialState,

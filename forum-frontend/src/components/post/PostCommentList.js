@@ -76,6 +76,7 @@ const PostCommentList = ({
             user={user}
             onSearch={onSearch}
             onToggle={onToggle}
+            onInsert={onInsert}
           ></PostCommentItem>
         ))}
       </div>

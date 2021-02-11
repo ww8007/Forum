@@ -8,7 +8,7 @@ const PostActionButtonBlock = styled.div`
   margin-bottom: 2rem;
   margin-top: -1.5rem;
 `;
-const ActionButton = styled.div`
+const ActionButton = styled.button`
   padding: 0.25rem 0.5rem;
   border-radius: 4px;
   color: ${palatte.gray[6]};
@@ -45,34 +45,56 @@ const PostCommentItem = ({
   onRemove,
   user,
   onSearch,
-  selectComment,
   onToggle,
+  onInsert,
 }) => {
   const [text, setText] = useState('');
+  const onSubmit = (e) => {
+    e.preventDefault();
+    onInsert(text);
+    setText('');
+  };
   const onChange = (e) => {
     setText(e.target.value);
   };
-
+  const onEdit = () => {
+    setText(comment.text);
+  };
   return (
     <>
       <span>
         Date: {comment.postDate} username: {user.username}
       </span>
       <hr />
+
       <span>
-        {comment.text}
+        {comment.edit ? (
+          <Input value={text} onChange={onChange}></Input>
+        ) : (
+          comment.text
+        )}
         <PostActionButtonBlock>
           <ActionButton
+            type={'submit'}
             onClick={() => {
-              onSearch(comment.id);
-              console.log(selectComment);
+              // onSearch(comment);
+              onToggle(comment.id);
+              onEdit();
             }}
           >
-            수정
+            {comment.edit ? '등록' : '수정'}
           </ActionButton>
-          <ActionButton onClick={() => onRemove(comment.id)}>삭제</ActionButton>
+          <ActionButton
+            onClick={() => {
+              {
+                !comment.edit ? onRemove(comment.id) : onToggle(comment.id);
+              }
+            }}
+          >
+            {!comment.edit ? '삭제' : '취소'}
+          </ActionButton>
         </PostActionButtonBlock>
-        {selectComment.id}
+
         <br />
       </span>
     </>
