@@ -5,6 +5,7 @@ const REMOVE = 'comment/REMOVE';
 const SET_ORIGINAL_COMMENT = 'comment/SET_ORIGINAL_COMMENT';
 const TOGGLE = 'comment/TOGGLE';
 const UPDATE_COMMNET = 'comment/UPDATE_COMMENT';
+const INSERT_RECOMMENT = 'comment/INSERT_RECOMMENT';
 let id = 3;
 
 export const insert = createAction(INSERT, (text) => ({
@@ -12,6 +13,7 @@ export const insert = createAction(INSERT, (text) => ({
   text,
   postDate: new Date().toLocaleDateString(),
   edit: false,
+  recomment_id: 0,
 }));
 export const remove = createAction(REMOVE, (id) => id);
 export const setOriginalPost = createAction(SET_ORIGINAL_COMMENT, (id) => id);
@@ -20,6 +22,13 @@ export const updateComment = createAction(UPDATE_COMMNET, ({ id, text }) => ({
   id,
   text,
 }));
+export const insertRecomment = createAction(
+  INSERT_RECOMMENT,
+  ({ id, text }) => ({
+    id,
+    text,
+  }),
+);
 
 const initialState = {
   comments: [
@@ -28,12 +37,14 @@ const initialState = {
       text: '정말 잘 봤어요!',
       postDate: new Date().toLocaleDateString(),
       edit: false,
+      recomment_id: 0,
     },
     {
       id: 2,
       text: '감사합니다.',
       postDate: new Date().toLocaleDateString(),
       edit: false,
+      recomment_id: 0,
     },
   ],
   selectComment: null,

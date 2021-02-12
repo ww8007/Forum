@@ -1,6 +1,12 @@
 import React, { useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { insert, remove, setOriginalPost, toggle } from '../../modules/comment';
+import {
+  insert,
+  remove,
+  setOriginalPost,
+  toggle,
+  updateComment,
+} from '../../modules/comment';
 import PostCommentList from '../../components/post/PostCommentList';
 const PostCommentContaner = () => {
   const { comments, user, selectComment } = useSelector(
@@ -20,6 +26,10 @@ const PostCommentContaner = () => {
     (comment) => dispatch(setOriginalPost(comment)),
     [dispatch],
   );
+  const onUpdate = useCallback(
+    ({ id, comment }) => dispatch(updateComment({ id, comment })),
+    [dispatch],
+  );
 
   return (
     <PostCommentList
@@ -28,6 +38,7 @@ const PostCommentContaner = () => {
       onInsert={onInsert}
       onSearch={onSearch}
       onToggle={onToggle}
+      onUpdate={onUpdate}
       user={user}
       selectComment={selectComment}
     ></PostCommentList>

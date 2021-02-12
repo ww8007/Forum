@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import palatte from '../../lib/styles/palette';
-
+import PostCommentToggle from './PostCommentToggle';
 const PostActionButtonBlock = styled.div`
   display: flex;
   justify-content: flex-end;
   margin-bottom: 2rem;
   margin-top: -1.5rem;
+  width: 100%;
 `;
 const ActionButton = styled.button`
   padding: 0.25rem 0.5rem;
@@ -47,12 +48,11 @@ const PostCommentItem = ({
   onSearch,
   onToggle,
   onInsert,
+  onUpdate,
 }) => {
   const [text, setText] = useState('');
   const onSubmit = (e) => {
-    e.preventDefault();
-    onInsert(text);
-    setText('');
+    console.log(e);
   };
   const onChange = (e) => {
     setText(e.target.value);
@@ -80,21 +80,21 @@ const PostCommentItem = ({
               // onSearch(comment);
               onToggle(comment.id);
               onEdit();
+              onUpdate(comment.id);
+              setText('');
             }}
           >
             {comment.edit ? '등록' : '수정'}
           </ActionButton>
           <ActionButton
             onClick={() => {
-              {
-                !comment.edit ? onRemove(comment.id) : onToggle(comment.id);
-              }
+              !comment.edit ? onRemove(comment.id) : onToggle(comment.id);
             }}
           >
             {!comment.edit ? '삭제' : '취소'}
           </ActionButton>
         </PostActionButtonBlock>
-
+        <PostCommentToggle onInsert={onInsert} />
         <br />
       </span>
     </>
