@@ -49,41 +49,47 @@ const PostCommentItem = ({
   onToggle,
   onInsert,
   onUpdate,
+  onSubmitComment,
+  onSubmit,
+  selectComment,
+  onChangeComment,
 }) => {
-  const [text, setText] = useState('');
-  const onSubmit = (e) => {
-    console.log(e);
-  };
+  const [texts, setText] = useState('');
+  const _id = comment.id;
+
   const onChange = (e) => {
+    console.log(e.target.value);
     setText(e.target.value);
   };
   const onEdit = () => {
     setText(comment.text);
+    console.log(comment.text);
   };
+  const { id, text } = comment;
+
   return (
     <>
-      <span>
-        Date: {comment.postDate} username: {user.username}
-      </span>
-      <hr />
+      <div>
+        <span>
+          Date: {comment.postDate} username: {user.username}
+        </span>
+        <hr />
 
-      <span>
         {comment.edit ? (
-          <Input value={text} onChange={onChange}></Input>
+          <Input value={texts} onChange={onChange}></Input>
         ) : (
           comment.text
         )}
         <PostActionButtonBlock>
           <ActionButton
-            type={'submit'}
             onClick={() => {
               // onSearch(comment);
               onToggle(comment.id);
-              onEdit();
-              onUpdate(comment.id);
-              setText('');
+              onEdit(comment.text);
             }}
           >
+            {comment.edit ? onChangeComment({ id, text }) : null}
+            {console.log(comment.text)}
             {comment.edit ? '등록' : '수정'}
           </ActionButton>
           <ActionButton
@@ -96,7 +102,7 @@ const PostCommentItem = ({
         </PostActionButtonBlock>
         <PostCommentToggle onInsert={onInsert} />
         <br />
-      </span>
+      </div>
     </>
   );
 };

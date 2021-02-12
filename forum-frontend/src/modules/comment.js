@@ -63,7 +63,7 @@ const comment = handleActions(
     }),
     [SET_ORIGINAL_COMMENT]: (state, { payload: post }) => ({
       ...state,
-      // selectComment: state.comments.filter((search) => search.id === id),
+      selectComment: state.comments.filter((search) => search.id === id),
       id: post.id,
       text: post.text,
       postDate: post.postDate,
@@ -74,10 +74,12 @@ const comment = handleActions(
         post.id === id ? { ...post, edit: !post.edit } : post,
       ),
     }),
-    [UPDATE_COMMNET]: (state, { payload: id, text }) => ({
+    [UPDATE_COMMNET]: (state, { payload: { id, text } }) => ({
       ...state,
       comments: state.comments.map((post) =>
-        post.id === id ? { ...post, text: post.text } : text,
+        post.id !== id
+          ? { ...post, text: post.text, id: post.id, postDate: post.postDate }
+          : { ...post, text: post.text, id: post.id, postDate: post.postDate },
       ),
     }),
   },

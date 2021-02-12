@@ -26,10 +26,14 @@ const PostCommentContaner = () => {
     (comment) => dispatch(setOriginalPost(comment)),
     [dispatch],
   );
-  const onUpdate = useCallback(
-    ({ id, comment }) => dispatch(updateComment({ id, comment })),
+  const onChangeComment = useCallback(
+    ({ id, text }) => dispatch(updateComment({ id, text })),
     [dispatch],
   );
+  const onSubmitComment = () => {
+    const { id, text } = comments;
+    dispatch(updateComment({ id, text }));
+  };
 
   return (
     <PostCommentList
@@ -38,7 +42,8 @@ const PostCommentContaner = () => {
       onInsert={onInsert}
       onSearch={onSearch}
       onToggle={onToggle}
-      onUpdate={onUpdate}
+      onChangeComment={onChangeComment}
+      onSubmitComment={onSubmitComment}
       user={user}
       selectComment={selectComment}
     ></PostCommentList>

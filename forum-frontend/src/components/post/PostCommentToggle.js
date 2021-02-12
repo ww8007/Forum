@@ -46,7 +46,12 @@ const Button = styled.button`
   float: right;
 `;
 
-const PostCommentToggle = ({ comment, onToggle, onInsert }) => {
+const PostCommentToggle = ({
+  comment,
+  onToggle,
+  onInsert,
+  onSubmitComment,
+}) => {
   const [set, onSet] = useState(false);
   const [text, setText] = useState('');
   const onSubmit = (e) => {
