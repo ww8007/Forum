@@ -1,30 +1,38 @@
 import React, { useState } from 'react';
 
 const TodosItem = ({ todo, onRemove, onToggle, onReInsert }) => {
-  const { id, text } = todo;
-  const [texts, setTexts] = useState('');
+  const { id } = todo;
+  const [text, setTexts] = useState('');
   const onSubmit = (e) => {
     e.preventDefault();
-    onReInsert(id, text);
+    // console.log(texts);
+    // console.log('id:', todo.id);
+    console.log('text-in-com', id, text);
+    onReInsert({ id, text });
     setTexts('');
   };
   const onChanges = (e) => {
     setTexts(e.target.value);
     console.log(e.target);
   };
+
   return (
-    <form onSubmit={onSubmit}>
+    <>
       <input
         type="checkbox"
-        checked={todo.done}
-        onClick={() => onToggle(todo.id)}
+        onClick={() => {
+          onToggle(todo.id);
+          console.log('안녕', id);
+        }}
       />
-      {todo.text}
-      {todo.done ? <input value={texts} onChange={onChanges}></input> : null}
-      <button type={'submit'}>수정</button>
-      <button onClick={() => onRemove(todo.id)}>삭제</button>
-      <br />
-    </form>
+      <form onSubmit={onSubmit}>
+        {todo.text}
+        {todo.done ? <input value={text} onChange={onChanges}></input> : null}
+        <button type={'submit'}>수정</button>
+        <button onClick={() => onRemove(todo.id)}>삭제</button>
+        <br />
+      </form>
+    </>
   );
 };
 

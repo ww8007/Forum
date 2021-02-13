@@ -4,17 +4,21 @@ const INSERT = 'todos/INSERT';
 const REMOVE = 'todos/REMOVE';
 const TOGGLE = 'todos/TOGGLE';
 const REINSERT = 'todos/REINSERT';
-let id = 3;
+const SELECT = 'todos/SELECT';
+let next_id = 3;
 
 export const insert = createAction(INSERT, (text) => ({
-  id: id++,
+  id: next_id++,
   text,
   done: false,
 }));
 export const remove = createAction(REMOVE, (id) => id);
 export const toggle = createAction(TOGGLE, (id) => id);
-export const reInsert = createAction(REINSERT, ({ id, text }) => ({
-  id,
+// export const select = createAction(SELECT, ({ id, text }) => {
+//   id, text;
+// });
+export const reInsert = createAction(REINSERT, (text) => ({
+  id: text,
   text,
 }));
 
@@ -47,14 +51,19 @@ const todos = handleActions(
     }),
     [TOGGLE]: (state, { payload: id }) => ({
       ...state,
-      todos: state.todos.map((todo) =>
-        todo.id === id ? { ...todo, done: !todo.done } : todo,
+      todos: state.todos.map(
+        (todo) => (todo.id === id ? { ...todo, done: !todo.done } : todo),
+        console.log('toggle-id', id),
       ),
     }),
+
     [REINSERT]: (state, { payload: { id, text } }) => ({
       ...state,
-      todos: state.todos.map((todo) =>
-        todo.id === id ? { ...todo, ...text } : text,
+      todos: state.todos.map(
+        (todo) => (todo.id === id ? { ...todo, text: text } : todo),
+        // console.log('id:', id),
+        console.log('id:::', id, text),
+        console.log(('text', text.id)),
       ),
     }),
   },
