@@ -8,7 +8,7 @@ const TodosItem = ({ todo, onRemove, onToggle, onReInsert }) => {
     // console.log(texts);
     // console.log('id:', todo.id);
     console.log('text-in-com', id, text);
-    onReInsert({ id, text });
+    onReInsert(id, text);
     setTexts('');
   };
   const onChanges = (e) => {

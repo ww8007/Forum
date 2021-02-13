@@ -60,10 +60,11 @@ const todos = handleActions(
     [REINSERT]: (state, { payload: { id, text } }) => ({
       ...state,
       todos: state.todos.map(
-        (todo) => (todo.id === id ? { ...todo, text: text } : todo),
+        (todo) => (todo.id === id ? { ...todo, text: todo.text } : todo),
         // console.log('id:', id),
-        console.log('id:::', id, text),
-        console.log(('text', text.id)),
+        console.log('things:', id, text),
+        console.log('id::', text.id),
+        console.log(('text', text.text)),
       ),
     }),
   },

@@ -6,14 +6,14 @@ const TodosContainer = () => {
   const { todos } = useSelector(({ todos }) => ({
     todos: todos.todos,
   }));
+
   const dispatch = useDispatch();
   const onInsert = useCallback((text) => dispatch(insert(text)), [dispatch]);
   const onRemove = useCallback((id) => dispatch(remove(id)), [dispatch]);
   const onToggle = useCallback((id) => dispatch(toggle(id)), [dispatch]);
-  const onReInsert = useCallback(
-    ({ id, text }) => dispatch(reInsert({ id, text })),
-    [dispatch],
-  );
+  const onReInsert = () => {
+    const { id, text };
+  };
   return (
     <Todos
       todos={todos}
