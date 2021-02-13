@@ -1,23 +1,33 @@
 import React, { useState } from 'react';
 
-const TodosItem = ({ todo, onRemove, onToggle }) => {
+const TodosItem = ({ todo, onRemove, onToggle, onReInsert }) => {
+  const { id, text } = todo;
+  const [texts, setTexts] = useState('');
+  const onSubmit = (e) => {
+    e.preventDefault();
+    onReInsert(texts);
+    setTexts('');
+  };
+  const onChanges = (e) => {
+    setTexts(e.target.value);
+  };
   return (
-    <div>
+    <>
       <input
         type="checkbox"
         checked={todo.done}
         onClick={() => onToggle(todo.id)}
-        readOnly={true}
       />
-      <span style={{ textDecoration: todo.done ? 'line-through' : 'none' }}>
-        {todo.text}
-      </span>
+      {todo.text}
+      {todo.done ? <input value={texts} onChange={onChanges}></input> : null}
+      <button onClick={() => onReInsert(texts)}>수정</button>
       <button onClick={() => onRemove(todo.id)}>삭제</button>
-    </div>
+      <br />
+    </>
   );
 };
 
-const Todos = ({ todos, onToggle, onRemove, onInsert }) => {
+const Todos = ({ todos, onToggle, onRemove, onInsert, onReInsert }) => {
   const [text, setText] = useState('');
   const onSubmit = (e) => {
     e.preventDefault();
@@ -45,6 +55,7 @@ const Todos = ({ todos, onToggle, onRemove, onInsert }) => {
             todo={todo}
             onToggle={onToggle}
             onRemove={onRemove}
+            onReInsert={onReInsert}
           />
         ))}
       </div>
