@@ -8,7 +8,7 @@ const TodosItem = ({ todo, onRemove, onToggle, onReInsert }) => {
     // console.log(texts);
     // console.log('id:', todo.id);
     console.log('text-in-com', id, text);
-    onReInsert(id, text);
+    onReInsert({ id, text });
     setTexts('');
   };
   const onChanges = (e) => {
@@ -22,11 +22,12 @@ const TodosItem = ({ todo, onRemove, onToggle, onReInsert }) => {
         type="checkbox"
         onClick={() => {
           onToggle(todo.id);
-          console.log('안녕', id);
+          setTexts(todo.text);
         }}
       />
       <form onSubmit={onSubmit}>
         {todo.text}
+
         {todo.done ? <input value={text} onChange={onChanges}></input> : null}
         <button type={'submit'}>수정</button>
         <button onClick={() => onRemove(todo.id)}>삭제</button>

@@ -11,9 +11,10 @@ const TodosContainer = () => {
   const onInsert = useCallback((text) => dispatch(insert(text)), [dispatch]);
   const onRemove = useCallback((id) => dispatch(remove(id)), [dispatch]);
   const onToggle = useCallback((id) => dispatch(toggle(id)), [dispatch]);
-  const onReInsert = () => {
-    const { id, text };
-  };
+  const onReInsert = useCallback(
+    ({ id, text }) => dispatch(reInsert({ id, text })),
+    [dispatch],
+  );
   return (
     <Todos
       todos={todos}

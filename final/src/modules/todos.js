@@ -17,8 +17,8 @@ export const toggle = createAction(TOGGLE, (id) => id);
 // export const select = createAction(SELECT, ({ id, text }) => {
 //   id, text;
 // });
-export const reInsert = createAction(REINSERT, (text) => ({
-  id: text,
+export const reInsert = createAction(REINSERT, ({ id, text }) => ({
+  id,
   text,
 }));
 
@@ -60,11 +60,11 @@ const todos = handleActions(
     [REINSERT]: (state, { payload: { id, text } }) => ({
       ...state,
       todos: state.todos.map(
-        (todo) => (todo.id === id ? { ...todo, text: todo.text } : todo),
+        (todo) => (todo.id === id ? { ...todo, text: text } : todo),
         // console.log('id:', id),
         console.log('things:', id, text),
-        console.log('id::', text.id),
-        console.log(('text', text.text)),
+        console.log('id::', id),
+        console.log(('text', text)),
       ),
     }),
   },
