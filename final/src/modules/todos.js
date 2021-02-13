@@ -13,7 +13,8 @@ export const insert = createAction(INSERT, (text) => ({
 }));
 export const remove = createAction(REMOVE, (id) => id);
 export const toggle = createAction(TOGGLE, (id) => id);
-export const reInsert = createAction(REINSERT, (text) => ({
+export const reInsert = createAction(REINSERT, ({ id, text }) => ({
+  id,
   text,
 }));
 
@@ -50,10 +51,10 @@ const todos = handleActions(
         todo.id === id ? { ...todo, done: !todo.done } : todo,
       ),
     }),
-    [REINSERT]: (state, { payload: text }) => ({
+    [REINSERT]: (state, { payload: { id, text } }) => ({
       ...state,
       todos: state.todos.map((todo) =>
-        todo.id === id ? { ...todo, text: text } : text,
+        todo.id === id ? { ...todo, ...text } : text,
       ),
     }),
   },

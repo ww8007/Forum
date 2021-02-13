@@ -5,14 +5,15 @@ const TodosItem = ({ todo, onRemove, onToggle, onReInsert }) => {
   const [texts, setTexts] = useState('');
   const onSubmit = (e) => {
     e.preventDefault();
-    onReInsert(texts);
+    onReInsert(id, text);
     setTexts('');
   };
   const onChanges = (e) => {
     setTexts(e.target.value);
+    console.log(e.target);
   };
   return (
-    <>
+    <form onSubmit={onSubmit}>
       <input
         type="checkbox"
         checked={todo.done}
@@ -20,10 +21,10 @@ const TodosItem = ({ todo, onRemove, onToggle, onReInsert }) => {
       />
       {todo.text}
       {todo.done ? <input value={texts} onChange={onChanges}></input> : null}
-      <button onClick={() => onReInsert(texts)}>수정</button>
+      <button type={'submit'}>수정</button>
       <button onClick={() => onRemove(todo.id)}>삭제</button>
       <br />
-    </>
+    </form>
   );
 };
 
