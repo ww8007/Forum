@@ -75,6 +75,7 @@ const PostCommentItem = ({
         {/* 댓글 정보 */}
         <span>
           Date: {comment.postDate} username: {user.username}
+          {console.log(new Date())}
         </span>
         <hr />
         {/* 댓글 수정 부 form 으로 구현  */}

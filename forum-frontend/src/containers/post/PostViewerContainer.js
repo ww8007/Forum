@@ -11,7 +11,7 @@ const PostViewerContainer = ({ match, history }) => {
   // 처음 마운트될 때 포스트 읽기 API 요청
   const { postId } = match.params;
   const dispatch = useDispatch();
-  const { post, error, loading, user } = useSelector(
+  const { post, error, loading, user, comment } = useSelector(
     ({ post, loading, user }) => ({
       post: post.post,
       error: post.error,
