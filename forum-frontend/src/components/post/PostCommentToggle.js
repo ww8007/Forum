@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { AiOutlinePlusSquare, AiOutlineMinusSquare } from 'react-icons/ai';
 import styled from 'styled-components';
 import palette from '../../lib/styles/palette';
+import PostRecommentItem from './PostRecommentItem';
 const ToggleButton = styled.div`
   display: flex;
   -webkit-box-align: center;
@@ -46,17 +47,14 @@ const Button = styled.button`
   float: right;
 `;
 
-const PostCommentToggle = ({
-  comment,
-  onToggle,
-  onInsert,
-  onSubmitComment,
-}) => {
+const PostCommentToggle = ({ comment, onRecomment }) => {
+  const { recomment_id } = comment;
+  // const { id } = comment.recomments;
   const [set, onSet] = useState(false);
   const [text, setText] = useState('');
   const onSubmit = (e) => {
     e.preventDefault();
-    onInsert(text);
+    onRecomment(text);
     setText('');
   };
   const onChange = (e) => {
@@ -87,19 +85,15 @@ const PostCommentToggle = ({
       </ToggleButton>
       <br />
       <div>
-        {!set ? null : (
-          <form onSubmit={onSubmit}>
-            <Input
-              type="text"
-              value={text}
-              placeholder="댓글을 입력하세요"
-              onChange={onChange}
-            />
-            <Button cyan type={'submit'}>
-              등록
-            </Button>
-          </form>
-        )}
+        {!set && comment.recomment_id !== 0
+          ? comment.recomments.map((recommnet) => (
+              <PostRecommentItem
+                key={recommnet.id}
+                recomment={recommnet}
+                onRecomment={onRecomment}
+              ></PostRecommentItem>
+            ))
+          : null}
       </div>
     </>
   );

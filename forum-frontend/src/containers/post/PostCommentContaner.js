@@ -4,8 +4,8 @@ import {
   insert,
   remove,
   setOriginalPost,
-  toggle,
   updateComment,
+  recomment,
 } from '../../modules/comment';
 import PostCommentList from '../../components/post/PostCommentList';
 const PostCommentContaner = () => {
@@ -21,19 +21,20 @@ const PostCommentContaner = () => {
     dispatch,
   ]);
   const onRemove = useCallback((id) => dispatch(remove(id)), [dispatch]);
-  const onToggle = useCallback((id) => dispatch(toggle(id)), [dispatch]);
+  // const onToggle = useCallback((id) => dispatch(toggle(id)), [dispatch]);
   const onSearch = useCallback(
     (comment) => dispatch(setOriginalPost(comment)),
     [dispatch],
   );
-  const onChangeComment = useCallback(
+
+  const onUpdateComment = useCallback(
     ({ id, text }) => dispatch(updateComment({ id, text })),
     [dispatch],
   );
-  const onSubmitComment = () => {
-    const { id, text } = comments;
-    dispatch(updateComment({ id, text }));
-  };
+  const onRecomment = useCallback(
+    ({ id, text }) => dispatch(updateComment({ id, text })),
+    [dispatch],
+  );
 
   return (
     <PostCommentList
@@ -41,10 +42,10 @@ const PostCommentContaner = () => {
       onRemove={onRemove}
       onInsert={onInsert}
       onSearch={onSearch}
-      onToggle={onToggle}
-      onChangeComment={onChangeComment}
-      onSubmitComment={onSubmitComment}
+      // onToggle={onToggle}
+      onRecomment={onRecomment}
       user={user}
+      onUpdateComment={onUpdateComment}
       selectComment={selectComment}
     ></PostCommentList>
   );

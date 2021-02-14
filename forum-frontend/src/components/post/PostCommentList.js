@@ -41,8 +41,8 @@ const PostCommentList = ({
   onSearch,
   selectComment,
   onToggle,
-  onSubmitComment,
-  onChangeComment,
+  onRecomment,
+  onUpdateComment
 }) => {
   const [text, setText] = useState('');
   const onSubmit = (e) => {
@@ -77,9 +77,9 @@ const PostCommentList = ({
             selectComment={selectComment}
             user={user}
             onSearch={onSearch}
-            onToggle={onToggle}
             onInsert={onInsert}
-            onChangeComment={onChangeComment}
+            onRecomment={onRecomment}
+            onUpdateComment={onUpdateComment}
           ></PostCommentItem>
         ))}
       </div>

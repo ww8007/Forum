@@ -3,9 +3,9 @@ import { createAction, handleActions } from 'redux-actions';
 const INSERT = 'comment/INSERT';
 const REMOVE = 'comment/REMOVE';
 const SET_ORIGINAL_COMMENT = 'comment/SET_ORIGINAL_COMMENT';
-const TOGGLE = 'comment/TOGGLE';
+// const TOGGLE = 'comment/TOGGLE';
 const UPDATE_COMMNET = 'comment/UPDATE_COMMENT';
-const INSERT_RECOMMENT = 'comment/INSERT_RECOMMENT';
+const RECOMMENT = 'commnet/RECOMMENT';
 let id = 3;
 
 export const insert = createAction(INSERT, (text) => ({
@@ -14,21 +14,19 @@ export const insert = createAction(INSERT, (text) => ({
   postDate: new Date().toLocaleDateString(),
   edit: false,
   recomment_id: 0,
+  recomments: [{ id: null, text: null }],
 }));
 export const remove = createAction(REMOVE, (id) => id);
 export const setOriginalPost = createAction(SET_ORIGINAL_COMMENT, (id) => id);
-export const toggle = createAction(TOGGLE, (id) => id);
+// export const toggle = createAction(TOGGLE, (id) => id);
 export const updateComment = createAction(UPDATE_COMMNET, ({ id, text }) => ({
   id,
   text,
 }));
-export const insertRecomment = createAction(
-  INSERT_RECOMMENT,
-  ({ id, text }) => ({
-    id,
-    text,
-  }),
-);
+export const recomment = createAction(RECOMMENT, ({ id, text }) => ({
+  id,
+  text,
+}));
 
 const initialState = {
   comments: [
@@ -37,7 +35,13 @@ const initialState = {
       text: '정말 잘 봤어요!',
       postDate: new Date().toLocaleDateString(),
       edit: false,
-      recomment_id: 0,
+      recomment_id: 1,
+      recomments: [
+        {
+          id: 1,
+          text: '반가워요',
+        },
+      ],
     },
     {
       id: 2,
@@ -47,6 +51,7 @@ const initialState = {
       recomment_id: 0,
     },
   ],
+
   selectComment: null,
   commentError: null,
 };
@@ -68,18 +73,24 @@ const comment = handleActions(
       text: post.text,
       postDate: post.postDate,
     }),
-    [TOGGLE]: (state, { payload: id }) => ({
-      ...state,
-      comments: state.comments.map((post) =>
-        post.id === id ? { ...post, edit: !post.edit } : post,
-      ),
-    }),
+    // [TOGGLE]: (state, { payload: id }) => ({
+    //   ...state,
+    //   comments: state.comments.map((post) =>
+    //     post.id === id ? { ...post, edit: !post.edit } : post,
+    //   ),
+    // }),
     [UPDATE_COMMNET]: (state, { payload: { id, text } }) => ({
       ...state,
-      comments: state.comments.map((post) =>
-        post.id !== id
-          ? { ...post, text: post.text, id: post.id, postDate: post.postDate }
-          : { ...post, text: post.text, id: post.id, postDate: post.postDate },
+      comments: state.comments.map(
+        (post) => (post.id === id ? { ...post, text: text } : post),
+        console.log('id, text : ', id, text),
+      ),
+    }),
+    [RECOMMENT]: (state, { payload: { id, text } }) => ({
+      ...state,
+      comments: state.comments.recomments.map(
+        (post) => (post.id === id ? { ...post, text: text } : post),
+        console.log('id, text : ', id, text),
       ),
     }),
   },

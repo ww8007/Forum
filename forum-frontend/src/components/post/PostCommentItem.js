@@ -45,62 +45,68 @@ const PostCommentItem = ({
   comment,
   onRemove,
   user,
-  onSearch,
-  onToggle,
+  onUpdateComment,
   onInsert,
-  onUpdate,
-  onSubmitComment,
-  onSubmit,
-  selectComment,
-  onChangeComment,
+  onRecomment,
 }) => {
-  const [texts, setText] = useState('');
-  const _id = comment.id;
+  const [text, setText] = useState('');
+  const [edit, setEdit] = useState(false);
+  const { id } = comment;
 
   const onChange = (e) => {
-    console.log(e.target.value);
     setText(e.target.value);
   };
-  const onEdit = () => {
-    setText(comment.text);
-    console.log(comment.text);
+
+  const onSumbit = (e) => {
+    e.preventDefault();
+    // 내용이 비어있을 경우 경고 표시
+    if (text === '') {
+      alert('내용을 입력해주세요!');
+      return;
+    }
+    onUpdateComment({ id, text });
+    setText('');
+    setEdit(!edit);
   };
-  const { id, text } = comment;
 
   return (
     <>
       <div>
+        {/* 댓글 정보 */}
         <span>
           Date: {comment.postDate} username: {user.username}
         </span>
         <hr />
-
-        {comment.edit ? (
-          <Input value={texts} onChange={onChange}></Input>
-        ) : (
-          comment.text
+        {/* 댓글 수정 부 form 으로 구현  */}
+        {edit && (
+          <form onSubmit={onSumbit}>
+            <Input value={text} onChange={onChange}></Input>
+            <PostActionButtonBlock>
+              <ActionButton type={'submit'}>등록</ActionButton>
+              <ActionButton>취소</ActionButton>
+            </PostActionButtonBlock>
+          </form>
         )}
-        <PostActionButtonBlock>
-          <ActionButton
-            onClick={() => {
-              // onSearch(comment);
-              onToggle(comment.id);
-              onEdit(comment.text);
-            }}
-          >
-            {comment.edit ? onChangeComment({ id, text }) : null}
-            {console.log(comment.text)}
-            {comment.edit ? '등록' : '수정'}
-          </ActionButton>
-          <ActionButton
-            onClick={() => {
-              !comment.edit ? onRemove(comment.id) : onToggle(comment.id);
-            }}
-          >
-            {!comment.edit ? '삭제' : '취소'}
-          </ActionButton>
-        </PostActionButtonBlock>
-        <PostCommentToggle onInsert={onInsert} />
+        {edit || (
+          <div>
+            {comment.text}
+            <PostActionButtonBlock>
+              <ActionButton
+                onClick={() => {
+                  setEdit(!edit);
+                  setText(comment.text);
+                }}
+              >
+                수정
+              </ActionButton>
+              <ActionButton onClick={() => onRemove(comment.id)}>
+                삭제
+              </ActionButton>
+            </PostActionButtonBlock>
+          </div>
+        )}
+
+        <PostCommentToggle onRecomment={onRecomment} comment={comment} />
         <br />
       </div>
     </>
