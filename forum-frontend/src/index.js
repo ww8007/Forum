@@ -21,7 +21,7 @@ function loadUser() {
   try {
     const user = localStorage.getItem('user');
     if (!user) return;
-
+    console.log('localuser is : ', user);
     store.dispatch(tempSetUser(user));
     store.dispatch(check());
   } catch (e) {

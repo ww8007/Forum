@@ -13,7 +13,7 @@ const [CHECK, CHECK_SUCCESS, CHECK_FAILURE] = createRequestActionTypes(
 );
 const LOGOUT = 'user/LOGOUT';
 
-export const tempSetUser = createAction(TEMP_SET_USER);
+export const tempSetUser = createAction(TEMP_SET_USER, (username) => username);
 export const check = createAction(CHECK, (user) => user);
 export const logout = createAction(LOGOUT);
 

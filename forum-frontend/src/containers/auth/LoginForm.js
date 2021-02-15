@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { changeField, initializeForm, login } from '../../modules/auth';
 import AuthForm from '../../components/auth/AuthForm';
-import { check } from '../../modules/user';
+import { check, tempSetUser } from '../../modules/user';
 
 const LoginForm = ({ history }) => {
   const [error, setError] = useState(null);
@@ -29,8 +29,8 @@ const LoginForm = ({ history }) => {
   // 폼 등록 이벤트 핸들러
   const onSubmit = (e) => {
     e.preventDefault();
-    const { username, password } = form;
-    dispatch(login({ username, password }));
+    const { username, email, password } = form;
+    dispatch(login({ username, email, password }));
   };
 
   // 컴포넌트가 처음 렌더링 될 때 form 을 초기화함
@@ -48,22 +48,23 @@ const LoginForm = ({ history }) => {
     }
     if (auth) {
       console.log('로그인 성공');
-
-      dispatch(check({ username }));
+      console.log(auth);
+      dispatch(tempSetUser(username));
       console.log(username);
     }
   }, [auth, authError, dispatch, form]);
 
   useEffect(() => {
-    if (user) {
+    if (auth) {
+      const { username } = form;
       history.push('/');
       try {
-        localStorage.setItem('user', JSON.stringify(user));
+        localStorage.setItem('user', JSON.stringify(username));
       } catch (e) {
         console.log('localStorage is not working');
       }
     }
-  }, [history, user]);
+  }, [history, auth, form]);
 
   return (
     <AuthForm
