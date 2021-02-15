@@ -67,7 +67,7 @@ const PostViewer = ({ post, error, loading, actionButtons }) => {
 
       <PostHead>
         <CommentHead>댓글</CommentHead>
-        <PostCommentContaner></PostCommentContaner>
+        {/* <PostCommentContaner></PostCommentContaner> */}
       </PostHead>
     </PostViewerBlock>
   );

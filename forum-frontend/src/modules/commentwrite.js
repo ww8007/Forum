@@ -1,5 +1,5 @@
 import { createAction, handleActions } from 'redux-actions';
-import { createAction, handleActions } from 'redux-actions';
+
 import createRequestSaga, {
   createRequestActionTypes,
 } from '../lib/createRequestSaga';
@@ -39,12 +39,15 @@ export const updateComment = createAction(UPDATE_COMMENT, ({ id, text }) => ({
   text,
 }));
 
-const writeCommentSaga = createRequestSaga(INSERT, postsAPI.writeCommnet);
-const updatePostSaga = createRequestSaga(UPDATE_COMMNET, postsAPI);
+const writeCommentSaga = createRequestSaga(
+  WRITE_COMMENT,
+  postsAPI.writeCommnet,
+);
+const updatePostSaga = createRequestSaga(UPDATE_COMMENT, postsAPI);
 
 export function* commentWriteSaga() {
-  yield takeLatest(INSERT, writeCommentSaga);
-  yield takeLatest(UPDATE_COMMNET, updatePostSaga);
+  yield takeLatest(WRITE_COMMENT, writeCommentSaga);
+  yield takeLatest(UPDATE_COMMENT, updatePostSaga);
 }
 
 const initialState = {

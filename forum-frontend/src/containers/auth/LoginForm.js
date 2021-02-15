@@ -39,6 +39,7 @@ const LoginForm = ({ history }) => {
   }, [dispatch]);
 
   useEffect(() => {
+    const { username } = form;
     if (authError) {
       console.log('오류 발생');
       console.log(authError);
@@ -47,9 +48,11 @@ const LoginForm = ({ history }) => {
     }
     if (auth) {
       console.log('로그인 성공');
-      dispatch(check());
+
+      dispatch(check({ username }));
+      console.log(username);
     }
-  }, [auth, authError, dispatch]);
+  }, [auth, authError, dispatch, form]);
 
   useEffect(() => {
     if (user) {

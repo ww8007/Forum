@@ -14,7 +14,7 @@ const [CHECK, CHECK_SUCCESS, CHECK_FAILURE] = createRequestActionTypes(
 const LOGOUT = 'user/LOGOUT';
 
 export const tempSetUser = createAction(TEMP_SET_USER);
-export const check = createAction(CHECK);
+export const check = createAction(CHECK, (user) => user);
 export const logout = createAction(LOGOUT);
 
 const checkSaga = createRequestSaga(CHECK, api.check);
