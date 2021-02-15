@@ -1,8 +1,9 @@
 import qs from 'qs';
 import client from './client';
 
-export const writePost = ({ title, body, tags }) =>
-  client.post('/api/posts', { title, body, tags });
+export const getBoard = (data) => (data = client.get(`/board`));
+export const writePost = ({ title, body }) =>
+  client.post('/api/posts', qs.stringify({ title, body }));
 
 export const writeCommnet = ({ key, comment }) => {
   const queryString = qs.stringify({
