@@ -1,7 +1,7 @@
 import qs from 'qs';
 import client from './client';
 
-export const getBoard = (data) => (data = client.get(`/board`));
+export const getBoard = (posts) => (posts = client.get(`/board`));
 export const writePost = ({ title, body }) =>
   client.post('/api/posts', qs.stringify({ title, body }));
 
@@ -13,7 +13,7 @@ export const writeCommnet = ({ key, comment }) => {
   return client.post('/api/posts', queryString);
 };
 
-export const readPost = (id) => client.get(`/api/posts/${id}`);
+export const readPost = (id) => client.get(`post?pk=${id}`);
 
 export const readComment = (key) => client.get('api/posts/');
 

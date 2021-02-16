@@ -42,24 +42,40 @@ const PostItemBlock = styled.div`
   }
 `;
 
+const SideBlock = styled.div`
+  background-color: white;
+  position: fixed;
+  width: 200px;
+  height: 100%;
+  margin-left: -100px;
+  margin-top: 50px;
+`;
+
 const PostItem = ({ post }) => {
-  const { publishedDate, user, tags, title, _id } = post;
+  const { name } = post.fields;
+  const { post_length } = post;
+  const number = post_length;
+  console.log(number);
   return (
     <PostItemBlock>
       <h2>
+        <Link to={`/?pk=${post.pk}`}>{name}</Link>
+      </h2>
+      <SubInfo>{number}</SubInfo>
+      {/* <h2>
         <Link to={`/@${user.username}/${_id}`}>{title}</Link>
       </h2>
-
+        
       <SubInfo
         username={user.username}
         publishedDate={new Date(publishedDate)}
       />
-      <Tags tags={tags} />
+      <Tags tags={tags} /> */}
     </PostItemBlock>
   );
 };
 
-const PostList = ({ posts, loading, error, showWriteButton }) => {
+const PostList = ({ posts, loading, error, showWriteButton, data }) => {
   // 에러 발생 시
   if (error) {
     return <PostListBlock>에러가 발생했습니다.</PostListBlock>;
@@ -75,13 +91,17 @@ const PostList = ({ posts, loading, error, showWriteButton }) => {
         )}
       </WritePostButtonWrapper>
       {/*  로딩 중 아니고, 포스트 배열이 존재할 때만 보여줌 */}
-      {!loading && posts && (
-        <div>
-          {posts.map((post) => (
-            <PostItem post={post} key={post._id} />
-          ))}
-        </div>
-      )}
+      {console.log('posts', posts)}
+      {console.log('data', data)}
+      <SideBlock>
+        {!loading && posts && (
+          <div>
+            {data.map((post) => (
+              <PostItem post={post} key={post._id} />
+            ))}
+          </div>
+        )}
+      </SideBlock>
     </PostListBlock>
   );
 };

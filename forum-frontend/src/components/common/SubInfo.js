@@ -25,18 +25,12 @@ const SubInfoBlock = styled.div`
   }
 `;
 
-const SubInfo = ({ username, publishedDate, hasMarginTop }) => {
+const SubInfo = ({ children, hasMarginTop }) => {
   return (
     <SubInfoBlock hasMarginTop={hasMarginTop}>
       <div>
-        <span>
-          <b>
-            <Link to={`/@${username}`}>작성자 : {username}</Link>
-          </b>
-        </span>
-        <span>작성일 : {new Date(publishedDate).toLocaleDateString()}</span>
+        <span>글 개수 : {children}</span>
       </div>
-      <div>댓글개수 : 1</div>
     </SubInfoBlock>
   );
 };
