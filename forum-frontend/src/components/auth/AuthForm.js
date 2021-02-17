@@ -93,14 +93,14 @@ const AuthForm = ({ type, form, onChange, onSubmit, error }) => {
             value={form.passwordConfirm}
           />
         )}
-        <StyledInput
+        {/* <StyledInput
           autoComplete="email"
           name="email"
           placeholder="이메일 입력"
           type="email"
           onChange={onChange}
           value={form.email}
-        />
+        /> */}
 
         {error && <ErrorMessage>{error}</ErrorMessage>}
         <ButtonWithMarginTop cyan fullWidth>

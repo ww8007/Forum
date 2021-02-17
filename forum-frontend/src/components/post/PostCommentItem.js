@@ -65,14 +65,16 @@ const PostCommentItem = ({
     setText('');
     setEdit(!edit);
   };
-  const { reply_length } = comment;
-  const { author, content, writeAt } = comment.fields;
+  console.log(comment);
+
+  const { username, writeAt, content } = comment.fields;
+  const postDate = writeAt.split('T');
   return (
     <>
       <div>
         {/* 댓글 정보 */}
         <span>
-          Date: {writeAt} username: {author}
+          Date: {postDate[0]} username: {username}
         </span>
         <hr />
         {/* 댓글 수정 부 form 으로 구현  */}

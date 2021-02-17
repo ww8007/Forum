@@ -24,11 +24,14 @@ export const changeField = createAction(CHANGE_FIELD, ({ key, value }) => ({
   key,
   value,
 }));
-export const writePost = createAction(WRITE_POST, ({ title, body, tags }) => ({
-  title,
-  body,
-  tags,
-}));
+export const writePost = createAction(
+  WRITE_POST,
+  ({ title, postId, body }) => ({
+    title,
+    postId,
+    body,
+  }),
+);
 export const setOriginalPost = createAction(SET_ORIGINAL_POST, (post) => post);
 export const updatePost = createAction(
   UPDATE_POST,
@@ -52,7 +55,7 @@ export function* writeSaga() {
 const initialState = {
   title: '',
   body: '',
-  tags: [],
+
   post: null,
   postError: null,
   originalPostId: null,

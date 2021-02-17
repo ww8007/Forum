@@ -54,8 +54,8 @@ const PostViewer = ({ post, error, loading, actionButtons, data, postId }) => {
     return null;
   }
   const new_id = postId - 1;
-  const { title, content, writeAt } = data[new_id].fields;
-  const { reply_length } = data[new_id];
+  const { title, content, writeAt } = data[postId].fields;
+  const { reply_length } = data[postId];
 
   return (
     <PostViewerBlock>

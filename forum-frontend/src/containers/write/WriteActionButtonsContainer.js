@@ -6,6 +6,7 @@ import { writePost, updatePost } from '../../modules/write';
 
 const WriteActionButtonsContainer = ({ history, match }) => {
   const { postId } = match.params;
+  console.log(('id aaaa', postId));
   const dispatch = useDispatch();
   const { title, body, tags, post, postError, originalPostId } = useSelector(
     ({ write }) => ({
@@ -14,6 +15,7 @@ const WriteActionButtonsContainer = ({ history, match }) => {
       tags: write.tags,
       post: write.post,
       postError: write.postError,
+      postId: write.postId,
       originalPostId: write.originalPostId,
     }),
   );

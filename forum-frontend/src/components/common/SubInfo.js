@@ -28,9 +28,7 @@ const SubInfoBlock = styled.div`
 const SubInfo = ({ children, hasMarginTop }) => {
   return (
     <SubInfoBlock hasMarginTop={hasMarginTop}>
-      <div>
-        <span>글 개수 : {children}</span>
-      </div>
+      <div></div>
     </SubInfoBlock>
   );
 };

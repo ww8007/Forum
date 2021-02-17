@@ -6,7 +6,8 @@ import { listPosts, readBoard } from '../../modules/posts';
 import { readPost } from '../../modules/post';
 
 const PostListContainer = ({ match, history, location }) => {
-  let { postId } = match.params;
+  let { postId, commendId } = match.params;
+  console.log(postId, commendId);
   const dispatch = useDispatch();
   const {
     posts,
