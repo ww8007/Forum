@@ -14,11 +14,15 @@ function App() {
       <Helmet>
         <title>REACTERS</title>
       </Helmet>
-      <Route component={PostListPage} path={['/@:username', '/']} exact />
+      <Route
+        component={PostListPage}
+        path={['/board/:postId', '/board', '/']}
+        exact
+      />
       <Route component={LoginPage} path="/login" />
       <Route component={RegisterPage} path="/register" />
       <Route component={WritePage} path="/write" />
-      <Route component={PostPage} path="/@:username/:postId" />
+      <Route component={PostPage} path="/board/post/:postId" />
     </>
   );
 }

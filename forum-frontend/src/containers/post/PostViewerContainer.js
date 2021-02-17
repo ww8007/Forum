@@ -10,13 +10,15 @@ import { removePost } from '../../lib/api/posts';
 const PostViewerContainer = ({ match, history }) => {
   // 처음 마운트될 때 포스트 읽기 API 요청
   const { postId } = match.params;
+  console.log(postId);
   const dispatch = useDispatch();
-  const { post, error, loading, user, comment } = useSelector(
+  const { post, error, loading, user, comment, data } = useSelector(
     ({ post, loading, user }) => ({
       post: post.post,
       error: post.error,
       loading: loading['post/READ_POST'],
       user: user.user,
+      data: post.data,
     }),
   );
 
@@ -43,8 +45,8 @@ const PostViewerContainer = ({ match, history }) => {
     }
   };
 
-  const ownPost = (user && user._id) === (post && post.user._id);
-  const ownComment = (user && user._id) === (post && post.user_id);
+  // const ownPost = (user && user._id) === (post && post.user._id);
+  // const ownComment = (user && user._id) === (post && post.user_id);
 
   return (
     <>
@@ -52,8 +54,10 @@ const PostViewerContainer = ({ match, history }) => {
         post={post}
         loading={loading}
         error={error}
+        data={data}
+        postId={postId}
         actionButtons={
-          ownPost && <PostActionButtons onEdit={onEdit} onRemove={onRemove} />
+          <PostActionButtons onEdit={onEdit} onRemove={onRemove} />
         }
       />
     </>

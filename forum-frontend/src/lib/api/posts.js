@@ -13,18 +13,9 @@ export const writeCommnet = ({ key, comment }) => {
   return client.post('/api/posts', queryString);
 };
 
-export const readPost = (id) => client.get(`post?pk=${id}`);
+export const readComment = (id) => client.get(`reply?pk=${id}`);
 
-export const readComment = (key) => client.get('api/posts/');
-
-export const listPosts = ({ page, username, tag }) => {
-  const queryString = qs.stringify({
-    page,
-    username,
-    tag,
-  });
-  return client.get(`/api/posts?${queryString}`);
-};
+export const readPost = (id) => client.get(`/post?pk=${id}`);
 
 export const updatePost = ({ id, title, body, tags }) =>
   client.patch(`/api/posts/${id}`, {

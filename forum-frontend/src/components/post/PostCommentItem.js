@@ -43,11 +43,8 @@ const Input = styled.input`
 
 const PostCommentItem = ({
   comment,
-  onRemove,
+
   user,
-  onUpdateComment,
-  onInsert,
-  onRecomment,
 }) => {
   const [text, setText] = useState('');
   const [edit, setEdit] = useState(false);
@@ -64,7 +61,7 @@ const PostCommentItem = ({
       alert('내용을 입력해주세요!');
       return;
     }
-    onUpdateComment({ id, text });
+
     setText('');
     setEdit(!edit);
   };
@@ -100,14 +97,12 @@ const PostCommentItem = ({
               >
                 수정
               </ActionButton>
-              <ActionButton onClick={() => onRemove(comment.id)}>
-                삭제
-              </ActionButton>
+              <ActionButton>삭제</ActionButton>
             </PostActionButtonBlock>
           </div>
         )}
 
-        <PostCommentToggle onRecomment={onRecomment} comment={comment} />
+        <PostCommentToggle comment={comment} />
         <br />
       </div>
     </>

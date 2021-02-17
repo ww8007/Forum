@@ -15,22 +15,27 @@ const UNLOAD_COMMENT = 'post/UNLOAD_COMMENT'; // 포스트 페이지에서 벗�
 export const readComment = createAction(READ_COMMENT, (id) => id);
 export const unloadComment = createAction(UNLOAD_COMMENT);
 
-const readCommentSaga = createRequestSaga(READ_COMMENT, postsAPI.readPost);
+const readCommentSaga = createRequestSaga(READ_COMMENT, postsAPI.readComment);
 export function* commentSaga() {
   yield takeLatest(READ_COMMENT, readCommentSaga);
 }
 
 const initialState = {
   comment: null,
+  data: null,
   error: null,
 };
 
 const post = handleActions(
   {
-    [READ_COMMENT_SUCCESS]: (state, { payload: comment }) => ({
-      ...state,
-      comment,
-    }),
+    [READ_COMMENT_SUCCESS]: (state, { payload: comment }) => (
+      {
+        ...state,
+        data: comment.data,
+        comment,
+      },
+      console.log(comment)
+    ),
     [READ_COMMENT_FAILURE]: (state, { payload: error }) => ({
       ...state,
       error,

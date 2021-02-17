@@ -33,21 +33,11 @@ const Button = styled.button`
   float: right;
 `;
 
-const PostCommentList = ({
-  comments,
-  onRemove,
-  onInsert,
-  user,
-  onSearch,
-  selectComment,
-  onToggle,
-  onRecomment,
-  onUpdateComment
-}) => {
+const PostCommentList = ({ user, data }) => {
   const [text, setText] = useState('');
   const onSubmit = (e) => {
     e.preventDefault();
-    onInsert(text);
+
     setText('');
   };
   const onChange = (e) => {
@@ -55,6 +45,7 @@ const PostCommentList = ({
   };
   return (
     <>
+      {console.log(data)}
       <form onSubmit={onSubmit}>
         <Input
           type="text"
@@ -69,17 +60,11 @@ const PostCommentList = ({
       <br />
       <br />
       <div>
-        {comments.map((comment) => (
+        {data.map((comment) => (
           <PostCommentItem
             key={comment.id}
-            onRemove={onRemove}
-            comment={comment}
-            selectComment={selectComment}
+            data={data}
             user={user}
-            onSearch={onSearch}
-            onInsert={onInsert}
-            onRecomment={onRecomment}
-            onUpdateComment={onUpdateComment}
           ></PostCommentItem>
         ))}
       </div>

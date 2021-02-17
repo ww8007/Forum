@@ -4,6 +4,7 @@ import createRequestSaga, {
 } from '../lib/createRequestSaga';
 import * as postsAPI from '../lib/api/posts';
 import { takeLatest } from 'redux-saga/effects';
+import posts from './posts';
 
 const [
   READ_POST,
@@ -22,6 +23,7 @@ export function* postSaga() {
 
 const initialState = {
   post: null,
+  data: null,
   error: null,
 };
 
@@ -29,6 +31,7 @@ const post = handleActions(
   {
     [READ_POST_SUCCESS]: (state, { payload: post }) => ({
       ...state,
+      data: post.data,
       post,
     }),
     [READ_POST_FAILURE]: (state, { payload: error }) => ({

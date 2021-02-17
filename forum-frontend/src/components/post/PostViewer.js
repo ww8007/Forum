@@ -35,7 +35,7 @@ const PostContent = styled.div`
   color: ${palette.gray[8]};
 `;
 
-const PostViewer = ({ post, error, loading, actionButtons }) => {
+const PostViewer = ({ post, error, loading, actionButtons, data, postId }) => {
   // 에러 발생 시
   if (error) {
     if (error.response && error.response.status === 404) {
@@ -49,25 +49,22 @@ const PostViewer = ({ post, error, loading, actionButtons }) => {
     return null;
   }
 
-  const { title, body, user, publishedDate, tags } = post;
+  const { title, content, writeAt } = data[postId].fields;
+  const { reply_length } = data[postId];
   return (
     <PostViewerBlock>
       <PostHead>
         <h1>제목 : {title}</h1>
-        <SubInfoinPost
-          username={user.username}
-          publishedDate={publishedDate}
-          hasMarginTop
-        />
-        <Tags tags={tags} />
+        <SubInfoinPost publishedDate={writeAt} hasMarginTop />
+        {/* <Tags tags={tags} /> */}
       </PostHead>
       {actionButtons}
-      <PostContent dangerouslySetInnerHTML={{ __html: body }} />
+      <PostContent dangerouslySetInnerHTML={{ __html: content }} />
       <PostHead />
 
       <PostHead>
-        <CommentHead>댓글</CommentHead>
-        {/* <PostCommentContaner></PostCommentContaner> */}
+        <CommentHead>댓글개수 : {reply_length}</CommentHead>
+        <PostCommentContaner></PostCommentContaner>
       </PostHead>
     </PostViewerBlock>
   );

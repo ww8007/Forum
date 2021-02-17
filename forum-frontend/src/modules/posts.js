@@ -5,54 +5,58 @@ import createRequestSaga, {
 import * as postsAPI from '../lib/api/posts';
 import { takeLatest } from 'redux-saga/effects';
 
-// const [
-//   LIST_POSTS,
-//   LIST_POSTS_SUCCESS,
-//   LIST_POSTS_FAILURE,
-// ] = createRequestActionTypes('posts/LIST_POSTS');
-
+// 게시판 목록 불러오기
 const [
   READ_BOAD,
   READ_BOAD_SUCCESS,
   READ_BOAD_FAILURE,
 ] = createRequestActionTypes('posts/READ_BOARD');
 
-// export const listPosts = createAction(
-//   LIST_POSTS,
-//   ({ tag, username, page }) => ({ tag, username, page }),
-// );
+// 글 목록 불러오기
+const [
+  LIST_POSTS,
+  LIST_POSTS_SUCCESS,
+  LIST_POSTS_FAILURE,
+] = createRequestActionTypes('posts/LIST_POSTS');
+
+// 액션 만들어주기
 
 export const readBoard = createAction(READ_BOAD);
+export const listPosts = createAction(LIST_POSTS, (id) => id);
 
-// const listPostsSaga = createRequestSaga(LIST_POSTS, postsAPI.listPosts);
+//Saga 만들어주기
+
+const listPostsSaga = createRequestSaga(LIST_POSTS, postsAPI.readPost);
 const readBoardSaga = createRequestSaga(READ_BOAD, postsAPI.getBoard);
 export function* postsSaga() {
-  // yield takeLatest(LIST_POSTS, listPostsSaga);
+  yield takeLatest(LIST_POSTS, listPostsSaga);
   yield takeLatest(READ_BOAD, readBoardSaga);
 }
 
 const initialState = {
+  boards: null,
   posts: null,
   data: null,
+  postsdata: null,
   error: null,
   lastPage: 1,
 };
 
 const posts = handleActions(
   {
-    // [LIST_POSTS_SUCCESS]: (state, { payload: posts, meta: response }) => ({
-    //   ...state,
-    //   posts,
-    //   lastPage: parseInt(response.headers['last-page'], 10), // 문자열을 숫자로 변환
-    // }),
-    // [LIST_POSTS_FAILURE]: (state, { payload: error }) => ({
-    //   ...state,
-    //   error,
-    // }),
-    [READ_BOAD_SUCCESS]: (state, { payload: posts, meta: response }) => ({
+    [LIST_POSTS_SUCCESS]: (state, { payload: posts }) => ({
       ...state,
+      postsdata: posts.data,
       posts,
-      data: posts.data,
+    }),
+    [LIST_POSTS_FAILURE]: (state, { payload: error }) => ({
+      ...state,
+      error,
+    }),
+    [READ_BOAD_SUCCESS]: (state, { payload: boards, meta: response }) => ({
+      ...state,
+      boards,
+      data: boards.data,
       lastPage: parseInt(response.headers['last-page'], 10), // 문자열을 숫자로 변환
     }),
     // (data = posts.data)

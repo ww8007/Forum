@@ -1,54 +1,30 @@
-// import React, { useCallback } from 'react';
-// import { useSelector, useDispatch } from 'react-redux';
-// import {
-//   insert,
-//   remove,
-//   setOriginalPost,
-//   updateComment,
-//   recomment,
-// } from '../../modules/comment';
-// import PostCommentList from '../../components/post/PostCommentList';
-// const PostCommentContaner = () => {
-//   const { comments, user, selectComment } = useSelector(
-//     ({ comment, user }) => ({
-//       comments: comment.comments,
-//       user: user.user,
-//       selectComment: comment.selectComment,
-//     }),
-//   );
-//   const dispatch = useDispatch();
-//   const onInsert = useCallback((comment) => dispatch(insert(comment)), [
-//     dispatch,
-//   ]);
-//   const onRemove = useCallback((id) => dispatch(remove(id)), [dispatch]);
-//   // const onToggle = useCallback((id) => dispatch(toggle(id)), [dispatch]);
-//   const onSearch = useCallback(
-//     (comment) => dispatch(setOriginalPost(comment)),
-//     [dispatch],
-//   );
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { readComment, unloadComment } from '../../modules/comment';
+import PostCommentList from '../../components/post/PostCommentList';
+const PostCommentContaner = ({ match }) => {
+  const { comments, user, data } = useSelector(({ comment, user }) => ({
+    comments: comment.comments,
+    user: user.user,
+    data: comment.data,
+  }));
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(readComment(1));
+    // 언마운트될 때 리덕스에서 포스트 데이터 없애기
+    return () => {
+      dispatch(unloadComment());
+    };
+  }, [dispatch]);
 
-//   const onUpdateComment = useCallback(
-//     ({ id, text }) => dispatch(updateComment({ id, text })),
-//     [dispatch],
-//   );
-//   const onRecomment = useCallback(
-//     ({ id, text }) => dispatch(updateComment({ id, text })),
-//     [dispatch],
-//   );
+  return (
+    <PostCommentList
+      comments={comments}
+      // onToggle={onToggle}
+      data={data}
+      user={user}
+    ></PostCommentList>
+  );
+};
 
-//   return (
-//     <PostCommentList
-//       comments={comments}
-//       onRemove={onRemove}
-//       onInsert={onInsert}
-//       onSearch={onSearch}
-//       // onToggle={onToggle}
-//       onRecomment={onRecomment}
-//       user={user}
-//       onUpdateComment={onUpdateComment}
-//       selectComment={selectComment}
-//     ></PostCommentList>
-//   );
-// };
-
-// export default React.memo(PostCommentContaner);
+export default React.memo(PostCommentContaner);
