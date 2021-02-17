@@ -65,14 +65,14 @@ const PostCommentItem = ({
     setText('');
     setEdit(!edit);
   };
-
+  const { reply_length } = comment;
+  const { author, content, writeAt } = comment.fields;
   return (
     <>
       <div>
         {/* 댓글 정보 */}
         <span>
-          Date: {comment.postDate} username: {user.username}
-          {console.log(new Date())}
+          Date: {writeAt} username: {author}
         </span>
         <hr />
         {/* 댓글 수정 부 form 으로 구현  */}
@@ -87,12 +87,11 @@ const PostCommentItem = ({
         )}
         {edit || (
           <div>
-            {comment.text}
+            {content}
             <PostActionButtonBlock>
               <ActionButton
                 onClick={() => {
                   setEdit(!edit);
-                  setText(comment.text);
                 }}
               >
                 수정

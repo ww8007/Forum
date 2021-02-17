@@ -10,7 +10,7 @@ import { removePost } from '../../lib/api/posts';
 const PostViewerContainer = ({ match, history }) => {
   // 처음 마운트될 때 포스트 읽기 API 요청
   const { postId } = match.params;
-  console.log(postId);
+  console.log('뷰어의 id : ', postId);
   const dispatch = useDispatch();
   const { post, error, loading, user, comment, data } = useSelector(
     ({ post, loading, user }) => ({

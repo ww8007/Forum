@@ -1,10 +1,13 @@
 import qs from 'qs';
 import client from './client';
 
+// 게시판 목록 불러오기
 export const getBoard = (posts) => (posts = client.get(`/board`));
-export const writePost = ({ title, body }) =>
-  client.post('/api/posts', qs.stringify({ title, body }));
 
+// 글쓰기
+export const writePost = ({ title, pk, content }) =>
+  client.post('/post', qs.stringify({ title, pk, content }));
+// 댓글 쓰기
 export const writeCommnet = ({ key, comment }) => {
   const queryString = qs.stringify({
     key,

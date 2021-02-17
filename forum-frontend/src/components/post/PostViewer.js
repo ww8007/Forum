@@ -4,7 +4,6 @@ import palette from '../../lib/styles/palette';
 import Responsive from '../common/Responsive';
 import SubInfo from '../common/SubInfo';
 import Tags from '../common/Tags';
-import PostCommentContaner from '../../containers/post/PostCommentContaner';
 const PostViewerBlock = styled(Responsive)`
   margin-top: 4rem;
 `;
@@ -16,6 +15,9 @@ const PostHead = styled.div`
     font-size: 3rem;
     line-height: 1.5;
     margin: 0;
+  }
+  span {
+    font-size: 0.8rem;
   }
 `;
 
@@ -41,6 +43,9 @@ const PostViewer = ({ post, error, loading, actionButtons, data, postId }) => {
     if (error.response && error.response.status === 404) {
       return <PostViewerBlock>존재하지 않는 포스트입니다.</PostViewerBlock>;
     }
+    {
+      console.log(error);
+    }
     return <PostViewerBlock>오류 발생!</PostViewerBlock>;
   }
 
@@ -48,9 +53,10 @@ const PostViewer = ({ post, error, loading, actionButtons, data, postId }) => {
   if (loading || !post) {
     return null;
   }
+  const new_id = postId - 1;
+  const { title, content, writeAt } = data[new_id].fields;
+  const { reply_length } = data[new_id];
 
-  const { title, content, writeAt } = data[postId].fields;
-  const { reply_length } = data[postId];
   return (
     <PostViewerBlock>
       <PostHead>
@@ -60,11 +66,11 @@ const PostViewer = ({ post, error, loading, actionButtons, data, postId }) => {
       </PostHead>
       {actionButtons}
       <PostContent dangerouslySetInnerHTML={{ __html: content }} />
+
       <PostHead />
 
       <PostHead>
-        <CommentHead>댓글개수 : {reply_length}</CommentHead>
-        <PostCommentContaner></PostCommentContaner>
+        <span>댓글개수 : {reply_length}</span>
       </PostHead>
     </PostViewerBlock>
   );

@@ -8,7 +8,7 @@ const WritePage = () => {
   return (
     <Responsive>
       <EditorContainer />
-      <TagBoxContainer />
+      <hr />
       <WriteActionButtonsContainer />
     </Responsive>
   );

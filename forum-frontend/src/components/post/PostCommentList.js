@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import PostCommentItem from './PostCommentItem';
 import palette from '../../lib/styles/palette';
+import Responsive from '../common/Responsive';
 import { stringify } from 'qs';
 const Input = styled.input`
   resize: none;
@@ -32,8 +33,22 @@ const Button = styled.button`
   }
   float: right;
 `;
+const PostHead = styled.div`
+  border-bottom: 1px solid ${palette.gray[2]};
+  padding-bottom: 3rem;
+  margin-bottom: 3rem;
+  h1 {
+    font-size: 3rem;
+    line-height: 1.5;
+    margin: 0;
+  }
+`;
 
-const PostCommentList = ({ user, data }) => {
+const PostViewerBlock = styled(Responsive)`
+  margin-top: 4rem;
+`;
+
+const PostCommentList = ({ user, comment, data }) => {
   const [text, setText] = useState('');
   const onSubmit = (e) => {
     e.preventDefault();
@@ -44,31 +59,32 @@ const PostCommentList = ({ user, data }) => {
     setText(e.target.value);
   };
   return (
-    <>
-      {console.log(data)}
-      <form onSubmit={onSubmit}>
-        <Input
-          type="text"
-          value={text}
-          placeholder="댓글을 입력하세요"
-          onChange={onChange}
-        />
-        <Button cyan type={'submit'}>
-          등록
-        </Button>
-      </form>
-      <br />
-      <br />
-      <div>
-        {data.map((comment) => (
-          <PostCommentItem
-            key={comment.id}
-            data={data}
-            user={user}
-          ></PostCommentItem>
-        ))}
-      </div>
-    </>
+    <PostViewerBlock>
+      <PostHead>
+        <form onSubmit={onSubmit}>
+          <Input
+            type="text"
+            value={text}
+            placeholder="댓글을 입력하세요"
+            onChange={onChange}
+          />
+          <Button cyan type={'submit'}>
+            등록
+          </Button>
+        </form>
+        <br />
+        <br />
+
+        <div>
+          {data.map((comment) => (
+            <PostCommentItem
+              key={comment.pk}
+              comment={comment}
+            ></PostCommentItem>
+          ))}
+        </div>
+      </PostHead>
+    </PostViewerBlock>
   );
 };
 

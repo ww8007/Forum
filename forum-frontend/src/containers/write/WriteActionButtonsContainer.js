@@ -4,7 +4,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { writePost, updatePost } from '../../modules/write';
 
-const WriteActionButtonsContainer = ({ history }) => {
+const WriteActionButtonsContainer = ({ history, match }) => {
+  const { postId } = match.params;
   const dispatch = useDispatch();
   const { title, body, tags, post, postError, originalPostId } = useSelector(
     ({ write }) => ({
@@ -26,8 +27,8 @@ const WriteActionButtonsContainer = ({ history }) => {
     dispatch(
       writePost({
         title,
+        postId,
         body,
-        tags,
       }),
     );
   };

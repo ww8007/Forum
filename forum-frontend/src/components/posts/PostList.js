@@ -6,6 +6,7 @@ import palette from '../../lib/styles/palette';
 import SubInfo from '../common/SubInfo';
 import Tags from '../common/Tags';
 import { Link, withRouter } from 'react-router-dom';
+import { readPost } from '../../modules/post';
 
 const PostListBlock = styled(Responsive)`
   margin-top: 3rem;
@@ -96,11 +97,12 @@ const BoardItem = ({ board }) => {
 
 const PostItem = ({ post }) => {
   const { reply_length } = post;
-  const { title, author, content, writeAt } = post.fields;
+  const { title, author, content, writeAt, board } = post.fields;
+
   return (
     <PostItemBlock>
       <h2>
-        <Link to={`/board/post/${post.pk}`}>{title}</Link>
+        <Link to={`/board/post/${board}`}>{title}</Link>
       </h2>
       <p>
         제목 : {title} 작성자 : {author} 작성일 {writeAt}
@@ -121,45 +123,56 @@ const PostList = ({
   data,
   match,
   postsdata,
+  postId,
   post,
 }) => {
   // 에러 발생 시
   if (error) {
     return <PostListBlock>에러가 발생했습니다.</PostListBlock>;
   }
-
+  // if (postId === undefined) {
+  //   return (postId = 1);
+  // }
+  const _postId = parseInt(localStorage.getItem('postId'));
   return (
-    <BoardItemBlock>
-      <SideBlock>
-        <h1>게시판 목록</h1>
+    console.log('id:', postId),
+    (
+      <BoardItemBlock>
+        <SideBlock>
+          <h1>게시판 목록</h1>
 
-        {!loading && boards && (
-          <div>
-            {data.map((board) => (
-              <BoardItem board={board} key={board.pk} />
-            ))}
-          </div>
-        )}
-      </SideBlock>
-      <PostListBlock>
-        <WritePostButtonWrapper>
-          {showWriteButton && (
-            <Button cyan to="/write">
-              새 글 작성하기
-            </Button>
+          {!loading && boards && (
+            <div>
+              {data.map((board) => (
+                <BoardItem board={board} key={board.pk} />
+              ))}
+            </div>
           )}
-        </WritePostButtonWrapper>
-        {/*  로딩 중 아니고, 포스트 배열이 존재할 때만 보여줌 */}
+        </SideBlock>
+        <PostListBlock>
+          <WritePostButtonWrapper>
+            {showWriteButton && postId ? (
+              <Button cyan to={`/write/${postId}`}>
+                새 글 작성하기
+              </Button>
+            ) : (
+              <Button cyan to={`/write/${_postId}`}>
+                새 글 작성하기
+              </Button>
+            )}
+          </WritePostButtonWrapper>
+          {/*  로딩 중 아니고, 포스트 배열이 존재할 때만 보여줌 */}
 
-        {!loading && posts && (
-          <div>
-            {postsdata.map((post) => (
-              <PostItem post={post} key={post.pk} />
-            ))}
-          </div>
-        )}
-      </PostListBlock>
-    </BoardItemBlock>
+          {!loading && posts && (
+            <div>
+              {postsdata.map((post) => (
+                <PostItem post={post} key={post.pk} />
+              ))}
+            </div>
+          )}
+        </PostListBlock>
+      </BoardItemBlock>
+    )
   );
 };
 

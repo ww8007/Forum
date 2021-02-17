@@ -84,7 +84,7 @@ const PostCommentToggle = ({ comment, onRecomment }) => {
         )}
       </ToggleButton>
       <br />
-      <div>
+      {/* <div>
         {!set && comment.recomment_id !== 0
           ? comment.recomments.map((recommnet) => (
               <PostRecommentItem
@@ -94,7 +94,7 @@ const PostCommentToggle = ({ comment, onRecomment }) => {
               ></PostRecommentItem>
             ))
           : null}
-      </div>
+      </div> */}
     </>
   );
 };

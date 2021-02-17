@@ -6,8 +6,7 @@ import { listPosts, readBoard } from '../../modules/posts';
 import { readPost } from '../../modules/post';
 
 const PostListContainer = ({ match, history, location }) => {
-  const { postId } = match.params;
-  console.log(postId);
+  let { postId } = match.params;
   const dispatch = useDispatch();
   const {
     posts,
@@ -34,9 +33,20 @@ const PostListContainer = ({ match, history, location }) => {
   }, [dispatch]);
   // 각 게시판 별 게시물들 불러오기
   useEffect(() => {
+    if (postId === undefined) {
+      postId = 1;
+    }
     dispatch(listPosts(postId));
   }, [dispatch, postId]);
-
+  useEffect(() => {
+    if (postId) {
+      try {
+        localStorage.setItem('postId', JSON.stringify(postId));
+      } catch (e) {
+        console.log('localStorage is not working');
+      }
+    }
+  }, [history]);
   return (
     <PostList
       postId={postId}

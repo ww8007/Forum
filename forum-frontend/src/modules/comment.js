@@ -22,20 +22,17 @@ export function* commentSaga() {
 
 const initialState = {
   comment: null,
-  data: null,
+  data: [],
   error: null,
 };
 
 const post = handleActions(
   {
-    [READ_COMMENT_SUCCESS]: (state, { payload: comment }) => (
-      {
-        ...state,
-        data: comment.data,
-        comment,
-      },
-      console.log(comment)
-    ),
+    [READ_COMMENT_SUCCESS]: (state, { payload: comment }) => ({
+      ...state,
+      data: comment.data,
+      comment,
+    }),
     [READ_COMMENT_FAILURE]: (state, { payload: error }) => ({
       ...state,
       error,

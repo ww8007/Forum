@@ -40,7 +40,7 @@ const AuthTemplate = ({ children }) => {
     <AuthTemplateBlock>
       <WitheBox>
         <div className="logo-area">
-          <Link to="/">REACTERS</Link>
+          <Link to="/board/1">REACTERS</Link>
         </div>
         {children}
       </WitheBox>
