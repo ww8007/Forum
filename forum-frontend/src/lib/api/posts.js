@@ -5,9 +5,17 @@ import client from './client';
 export const getBoard = (posts) => (posts = client.get(`/board`));
 
 // 글쓰기
-export const writePost = ({ title, pk, content }) =>
+export const writePost1 = ({ title, pk, content }) =>
   client.post('/post', qs.stringify({ title, pk, content }));
 // 댓글 쓰기
+export const writePost = ({ title, pk, content }) => {
+  const queryString = qs.stringify({
+    title,
+    pk,
+    content,
+  });
+  return client.post('/post', queryString);
+};
 export const writeCommnet = ({ key, comment }) => {
   const queryString = qs.stringify({
     key,

@@ -60,6 +60,7 @@ const LoginForm = ({ history }) => {
       history.push('/');
       try {
         localStorage.setItem('user', JSON.stringify(username));
+        console.log('저장 완료');
       } catch (e) {
         console.log('localStorage is not working');
       }

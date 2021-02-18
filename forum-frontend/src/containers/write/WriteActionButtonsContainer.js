@@ -8,29 +8,35 @@ const WriteActionButtonsContainer = ({ history, match }) => {
   const { postId } = match.params;
   console.log(('id aaaa', postId));
   const dispatch = useDispatch();
-  const { title, body, tags, post, postError, originalPostId } = useSelector(
-    ({ write }) => ({
-      title: write.title,
-      body: write.body,
-      tags: write.tags,
-      post: write.post,
-      postError: write.postError,
-      postId: write.postId,
-      originalPostId: write.originalPostId,
-    }),
-  );
+  const {
+    title,
+    content,
+    tags,
+    pk,
+    post,
+    postError,
+    originalPostId,
+  } = useSelector(({ write }) => ({
+    title: write.title,
+    content: write.content,
+    tags: write.tags,
+    post: write.post,
+    postError: write.postError,
+    pk: 1,
+    originalPostId: write.originalPostId,
+  }));
 
   // 포스트 등록
   const onPublish = () => {
-    if (originalPostId) {
-      dispatch(updatePost({ title, body, tags, id: originalPostId }));
-      return;
-    }
+    // if (originalPostId) {
+    //   dispatch(updatePost({ title, content, tags, id: originalPostId }));
+    //   return;
+    // }
     dispatch(
       writePost({
         title,
-        postId,
-        body,
+        pk,
+        content,
       }),
     );
   };
