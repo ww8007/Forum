@@ -19,6 +19,10 @@ const [
   LIST_POSTS_FAILURE,
 ] = createRequestActionTypes('posts/LIST_POSTS');
 
+const TOGGLE_MENU = 'posts/TOGGLE/MENU';
+
+export const toggleMenu = createAction(TOGGLE_MENU);
+
 // 액션 만들어주기
 
 export const readBoard = createAction(READ_BOAD);
@@ -40,6 +44,7 @@ const initialState = {
   postsdata: null,
   error: null,
   lastPage: 1,
+  toggle: false,
 };
 
 const posts = handleActions(
@@ -64,6 +69,10 @@ const posts = handleActions(
     [READ_BOAD_FAILURE]: (state, { payload: error }) => ({
       ...state,
       error,
+    }),
+    [TOGGLE_MENU]: (state, { payload: toggle }) => ({
+      ...state,
+      toggle: !toggle,
     }),
   },
   initialState,

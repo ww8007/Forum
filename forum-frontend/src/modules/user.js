@@ -13,7 +13,7 @@ const [CHECK, CHECK_SUCCESS, CHECK_FAILURE] = createRequestActionTypes(
 );
 const LOGOUT = 'user/LOGOUT';
 
-export const tempSetUser = createAction(TEMP_SET_USER, (username) => username);
+export const tempSetUser = createAction(TEMP_SET_USER, (user) => user);
 export const check = createAction(CHECK, (user) => user);
 export const logout = createAction(LOGOUT);
 
@@ -49,15 +49,25 @@ const initialState = {
 
 export default handleActions(
   {
+    [CHECK]: (state, { payload: user, meta: response }) => (
+      {
+        ...state,
+        user,
+      },
+      console.log(user)
+    ),
     [TEMP_SET_USER]: (state, { payload: user }) => ({
       ...state,
       user,
     }),
-    [CHECK_SUCCESS]: (state, { payload: user }) => ({
-      ...state,
-      user,
-      checkError: null,
-    }),
+    [CHECK_SUCCESS]: (state, { payload: user, meta: response }) => (
+      {
+        ...state,
+        user,
+        checkError: null,
+      },
+      console.log(response)
+    ),
     [CHECK_FAILURE]: (state, { payload: error }) => ({
       ...state,
       user: null,

@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { AiOutlineMenu } from 'react-icons/ai';
 import { Link } from 'react-router-dom';
 import Responsive from './Responsive';
 import Button from './Button';
@@ -14,11 +15,40 @@ const HeaderBlock = styled.div`
 /**
  * Responsive 컴포넌트의 속성에 스타일을 추가해서 새로운 컴포넌트 생성
  */
+
 const Wrapper = styled(Responsive)`
   height: 4rem;
   display: flex;
   align-items: center;
   justify-content: space-between; /* 자식 엘리먼트 사이에 여백을 최대로 설정 */
+  .menu {
+    position: absolute;
+    justify-content: flex-start;
+    align-items: center;
+    font-size: 1.5rem;
+    margin-left: -29rem;
+
+    .box {
+      width: 10px;
+      height: 1916px;
+    }
+    .box:hover {
+      background-color: tomato;
+      animation: first-ani 2s;
+      animation-fill-mode: forwards;
+    }
+
+    @keyframes first-ani {
+      0% {
+        width: 100px;
+        height: 1916px;
+      }
+      100% {
+        width: 300px;
+        height: 1916px;
+      }
+    }
+  }
   .logo {
     font-size: 1.5rem;
     font-weight: 800;
@@ -47,11 +77,19 @@ const MenuList = styled(Link)`
   margin-right: 1rem;
 `;
 
-const Header = ({ user, onLogout }) => {
+const Header = ({ user, onLogout, onClick }) => {
   return (
     <>
       <HeaderBlock>
         <Wrapper>
+          <AiOutlineMenu
+            className="menu"
+            color="#22b8cf"
+            onClick={onClick}
+          ></AiOutlineMenu>
+          <div className="menu">
+            <div className="box"></div>
+          </div>
           <Link to="/" className="logo">
             REACTERS
           </Link>

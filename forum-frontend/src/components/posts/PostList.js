@@ -72,9 +72,10 @@ const SideBlock = styled.div`
   h1 {
     font-size: 1.5rem;
   }
-  background-color: white;
   position: fixed;
-  width: 200px;
+  background-color: white;
+
+  width: 10%;
   height: 100%;
   margin-left: 100px;
   margin-top: 70px;
@@ -100,7 +101,7 @@ const PostItem = ({ post }) => {
   const { email, username } = post.fields.author.fields;
 
   const { title, content, writeAt, board } = post.fields;
-  console.log(email);
+  console.log('fileds', post.fields);
   const postDate = writeAt.split('T');
 
   return (

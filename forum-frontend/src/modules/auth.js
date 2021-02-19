@@ -59,6 +59,7 @@ const initialState = {
     password: '',
   },
   auth: null,
+  cookies: null,
   authError: null,
 };
 
@@ -74,11 +75,15 @@ const auth = handleActions(
       authError: null, // 폼 전환 시 회원 인증 에러 초기화
     }),
     // 회원가입 성공
-    [REGISTER_SUCCESS]: (state, { payload: auth }) => ({
-      ...state,
-      authError: null,
-      auth,
-    }),
+    [REGISTER_SUCCESS]: (state, { payload: auth, meta: response, cookies }) => (
+      {
+        ...state,
+        authError: null,
+        auth,
+        cookies: response,
+      },
+      console.log('안녕', response, cookies)
+    ),
     // 회원가입 실패
     [REGISTER_FAILURE]: (state, { payload: error }) => ({
       ...state,
@@ -86,7 +91,7 @@ const auth = handleActions(
       authError: error,
     }),
     // 로그인 성공
-    [LOGIN_SUCCESS]: (state, { payload: auth }) => ({
+    [LOGIN_SUCCESS]: (state, { payload: auth, meta: response }) => ({
       ...state,
       authError: null,
       auth,
