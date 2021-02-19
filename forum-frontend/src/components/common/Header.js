@@ -2,7 +2,9 @@ import React from 'react';
 import styled from 'styled-components';
 import { AiOutlineMenu } from 'react-icons/ai';
 import { Link } from 'react-router-dom';
+import palette from '../../lib/styles/palette';
 import Responsive from './Responsive';
+
 import Button from './Button';
 
 const HeaderBlock = styled.div`
@@ -26,15 +28,18 @@ const Wrapper = styled(Responsive)`
     justify-content: flex-start;
     align-items: center;
     font-size: 1.5rem;
-    margin-left: -29rem;
+    margin-left: -28rem;
 
     .box {
-      width: 10px;
+      margin-left: -1rem;
+      width: 3rem;
       height: 1916px;
+      font-size: 10px;
+      color: black;
     }
     .box:hover {
-      background-color: tomato;
-      animation: first-ani 2s;
+      background: ${palette.gray[6]};
+      animation: first-ani 1s;
       animation-fill-mode: forwards;
     }
 
@@ -43,6 +48,7 @@ const Wrapper = styled(Responsive)`
         width: 100px;
         height: 1916px;
       }
+
       100% {
         width: 300px;
         height: 1916px;
@@ -77,7 +83,21 @@ const MenuList = styled(Link)`
   margin-right: 1rem;
 `;
 
-const Header = ({ user, onLogout, onClick }) => {
+const BoardItem = ({ board }) => {
+  const { name } = board.fields;
+  const { post_length } = board;
+  const number = post_length;
+
+  return (
+    <>
+      <h2>
+        <Link to={`/board/${board.pk}`}>{name}</Link>
+      </h2>
+      {console.log(board)}
+    </>
+  );
+};
+const Header = ({ user, onLogout, onClick, boards, data }) => {
   return (
     <>
       <HeaderBlock>
@@ -88,7 +108,17 @@ const Header = ({ user, onLogout, onClick }) => {
             onClick={onClick}
           ></AiOutlineMenu>
           <div className="menu">
-            <div className="box"></div>
+            안녕
+            <div className="box">
+              {/* {boards && (
+                <div>
+                  {data.map((board) => (
+                    <BoardItem board={board} key={board.pk} />
+                  ))}
+                </div>
+              )} */}
+              안녕
+            </div>
           </div>
           <Link to="/" className="logo">
             REACTERS

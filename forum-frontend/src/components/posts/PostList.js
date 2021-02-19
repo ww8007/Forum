@@ -101,7 +101,7 @@ const PostItem = ({ post }) => {
   const { email, username } = post.fields.author.fields;
 
   const { title, content, writeAt, board } = post.fields;
-  console.log('fileds', post.fields);
+
   const postDate = writeAt.split('T');
 
   return (
@@ -141,7 +141,7 @@ const PostList = ({
   const _postId = parseInt(localStorage.getItem('postId'));
   return (
     <BoardItemBlock>
-      <SideBlock>
+      {/* <SideBlock>
         <h1>게시판 목록</h1>
 
         {!loading && boards && (
@@ -151,7 +151,7 @@ const PostList = ({
             ))}
           </div>
         )}
-      </SideBlock>
+      </SideBlock> */}
       <PostListBlock>
         <WritePostButtonWrapper>
           {showWriteButton && postId ? (
