@@ -87,15 +87,11 @@ const auth = handleActions(
       authError: error,
     }),
     // 로그인 성공
-    [LOGIN_SUCCESS]: (state, { payload: auth, meta: response }) => (
-      {
-        ...state,
-        authError: null,
-        auth,
-        cookies: response.headers.cookies,
-      },
-      console.log(response.headers.cookies, response.headers.cookie)
-    ),
+    [LOGIN_SUCCESS]: (state, { payload: auth }) => ({
+      ...state,
+      authError: null,
+      auth,
+    }),
     // 로그인 실패
     [LOGIN_FAILURE]: (state, { payload: error }) => ({
       ...state,

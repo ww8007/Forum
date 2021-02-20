@@ -56,6 +56,7 @@ const LoginForm = ({ history }) => {
     if (auth) {
       console.log(auth);
       const { username } = form;
+      console.log('hi', form);
       history.push('/');
       try {
         localStorage.setItem('user', JSON.stringify(username));
@@ -63,6 +64,7 @@ const LoginForm = ({ history }) => {
       } catch (e) {
         console.log('localStorage is not working');
       }
+      console.log(localStorage);
     }
   }, [history, auth, form]);
 
