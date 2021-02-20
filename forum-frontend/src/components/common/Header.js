@@ -24,37 +24,61 @@ const Wrapper = styled(Responsive)`
   align-items: center;
   justify-content: space-between; /* 자식 엘리먼트 사이에 여백을 최대로 설정 */
   .menu {
-    position: absolute;
     justify-content: flex-start;
     align-items: center;
     font-size: 1.5rem;
     margin-left: -28rem;
-
-    .box {
-      margin-left: -1rem;
-      width: 3rem;
-      height: 1916px;
-      font-size: 10px;
-      color: black;
+  }
+  .box {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 200px;
+    margin-top: -1rem;
+    height: 1916px;
+    font-size: 20px;
+    h1 {
+      display: none;
+      font-size: 2rem;
+      margin-top: 5rem;
     }
-    .box:hover {
-      background: ${palette.gray[6]};
-      animation: first-ani 1s;
-      animation-fill-mode: forwards;
-    }
-
-    @keyframes first-ani {
-      0% {
-        width: 100px;
-        height: 1916px;
-      }
-
-      100% {
-        width: 300px;
-        height: 1916px;
-      }
+    a {
+      position: fixed;
+      top: 10rem;
+      left: 0;
+      margin-left: 1rem;
+      right: 1rem;
+      bottom: 0;
+      width: 2rem;
+      height: 1rem;
+      display: none;
     }
   }
+  .box:hover {
+    h1 {
+      display: inline-block;
+    }
+    a {
+      display: block;
+    }
+    background: ${palette.gray[6]};
+    animation: first-ani 1s;
+
+    animation-fill-mode: forwards;
+  }
+
+  @keyframes first-ani {
+    0% {
+      width: 200px;
+    }
+
+    100% {
+      width: 200px;
+    }
+  }
+
   .logo {
     font-size: 1.5rem;
     font-weight: 800;
@@ -90,10 +114,7 @@ const BoardItem = ({ board }) => {
 
   return (
     <>
-      <h2>
-        <Link to={`/board/${board.pk}`}>{name}</Link>
-      </h2>
-      {console.log(board)}
+      <Link to={`/board/${board.pk}`}>{name}</Link>
     </>
   );
 };
@@ -107,25 +128,24 @@ const Header = ({ user, onLogout, onClick, boards, data }) => {
             color="#22b8cf"
             onClick={onClick}
           ></AiOutlineMenu>
-          <div className="menu">
-            안녕
-            <div className="box">
-              {/* {boards && (
-                <div>
-                  {data.map((board) => (
-                    <BoardItem board={board} key={board.pk} />
-                  ))}
-                </div>
-              )} */}
-              안녕
-            </div>
-          </div>
+
+          <ul className="box">
+            <h1>게시판</h1>
+            {boards && (
+              <ul>
+                {data.map((board) => (
+                  <BoardItem board={board} key={board.pk} />
+                ))}
+              </ul>
+            )}
+          </ul>
+
           <Link to="/" className="logo">
             REACTERS
           </Link>
           <MenuList to="/">FORUM</MenuList>
           <MenuList to="/login">BOARD</MenuList>
-          <MenuList>Q&A</MenuList>
+          <MenuList to="/board/1">Q&A</MenuList>
           {user ? (
             <div className="right">
               <UserInfo>{user.username}</UserInfo>

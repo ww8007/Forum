@@ -48,12 +48,13 @@ const LoginForm = ({ history }) => {
     }
     if (auth) {
       console.log('로그인 성공');
-      dispatch(check(username));
+      dispatch(check());
     }
   }, [auth, authError, dispatch, form]);
 
   useEffect(() => {
     if (auth) {
+      console.log(auth);
       const { username } = form;
       history.push('/');
       try {
