@@ -39,7 +39,6 @@ const LoginForm = ({ history }) => {
   }, [dispatch]);
 
   useEffect(() => {
-    const { username } = form;
     if (authError) {
       console.log('오류 발생');
       console.log(authError);
@@ -47,8 +46,11 @@ const LoginForm = ({ history }) => {
       return;
     }
     if (auth) {
+      const { username } = form;
+      console.log('username is ', username);
       console.log('로그인 성공');
-      dispatch(check());
+
+      dispatch(tempSetUser(username));
     }
   }, [auth, authError, dispatch, form]);
 
@@ -56,15 +58,17 @@ const LoginForm = ({ history }) => {
     if (auth) {
       console.log(auth);
       const { username } = form;
+
       history.push('/');
       try {
         localStorage.setItem('user', JSON.stringify(username));
-        console.log('저장 완료');
       } catch (e) {
         console.log('localStorage is not working');
       }
+
+      console.log('user', user);
     }
-  }, [history, auth, form]);
+  }, [history, auth, form, user]);
 
   return (
     <AuthForm
