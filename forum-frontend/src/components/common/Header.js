@@ -9,7 +9,7 @@ import Button from './Button';
 
 const HeaderBlock = styled.div`
   position: fixed;
-  width: 100%;
+
   background: white;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.08);
 `;
@@ -17,17 +17,17 @@ const HeaderBlock = styled.div`
 /**
  * Responsive 컴포넌트의 속성에 스타일을 추가해서 새로운 컴포넌트 생성
  */
-
-const Wrapper = styled(Responsive)`
-  height: 4rem;
-  display: flex;
+const Menu = styled.div`
+  width: 10%;
+  margin: 0;
+  display: inline-flex;
+  margin-top: 2rem;
   align-items: center;
-  justify-content: space-between; /* 자식 엘리먼트 사이에 여백을 최대로 설정 */
+  -webkit-box-align: center;
   .menu {
     justify-content: flex-start;
     align-items: center;
     font-size: 1.5rem;
-    margin-left: -28rem;
   }
   .box {
     position: fixed;
@@ -78,6 +78,13 @@ const Wrapper = styled(Responsive)`
       width: 200px;
     }
   }
+`;
+
+const Wrapper = styled(Responsive)`
+  height: 4rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between; /* 자식 엘리먼트 사이에 여백을 최대로 설정 */
 
   .logo {
     font-size: 1.5rem;
@@ -122,13 +129,12 @@ const Header = ({ user, onLogout, onClick, boards, data }) => {
   return (
     <>
       <HeaderBlock>
-        <Wrapper>
+        <Menu>
           <AiOutlineMenu
             className="menu"
             color="#22b8cf"
             onClick={onClick}
           ></AiOutlineMenu>
-
           <ul className="box">
             <h1>게시판</h1>
             {boards && (
@@ -139,7 +145,8 @@ const Header = ({ user, onLogout, onClick, boards, data }) => {
               </ul>
             )}
           </ul>
-
+        </Menu>
+        <Wrapper>
           <Link to="/" className="logo">
             REACTERS
           </Link>
