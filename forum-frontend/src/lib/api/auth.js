@@ -3,7 +3,7 @@ import qs from 'qs';
 
 // client.defaults.withCredentials = true;
 // 로그인
-document.cookie = 'user/name; Same-site=none';
+
 export const login = ({ username, password }) =>
   client.post('/login', qs.stringify({ username, password }));
 

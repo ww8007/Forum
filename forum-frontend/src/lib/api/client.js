@@ -4,11 +4,11 @@ import axios from 'axios';
 
 const client = axios.create();
 
-// 글로벌 설정
+// // 글로벌 설정
 
-// // API 주소 다른 곳 사용
-client.defaults.baseURL =
-  'http://ec2-3-35-233-97.ap-northeast-2.compute.amazonaws.com';
+// // // API 주소 다른 곳 사용
+// client.defaults.baseURL =
+//   'http://ec2-3-35-233-97.ap-northeast-2.compute.amazonaws.com';
 
 // //header
 // client.defaults.headers.common['Authorization'] = '주소';
