@@ -37,7 +37,15 @@ const PostContent = styled.div`
   color: ${palette.gray[8]};
 `;
 
-const PostViewer = ({ post, error, loading, actionButtons, data, postId }) => {
+const PostViewer = ({
+  post,
+  error,
+  loading,
+  actionButtons,
+  data,
+  postId,
+  postsdata,
+}) => {
   // 에러 발생 시
   if (error) {
     if (error.response && error.response.status === 404) {
@@ -54,8 +62,8 @@ const PostViewer = ({ post, error, loading, actionButtons, data, postId }) => {
     return null;
   }
   const new_id = postId - 1;
-  const { title, content, writeAt } = data[postId].fields;
-  const { reply_length } = data[postId];
+  const { title, content, writeAt } = postsdata[new_id].fields;
+  const { reply_length } = postsdata[new_id];
 
   return (
     <PostViewerBlock>

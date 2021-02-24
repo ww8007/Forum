@@ -6,53 +6,55 @@ import createRequestSaga, {
 import * as postsAPI from '../lib/api/posts';
 import { takeLatest } from 'redux-saga/effects';
 
-const INITIALIZE = 'write/INITIALIZE'; // 모든 내용 초기화
-const CHANGE_FIELD = 'write/CHANGE_FIELD'; // 특정 key 값 바꾸기
+const INITIALIZE = 'commentwrite/INITIALIZE'; // 모든 내용 초기화
+const CHANGE_FIELD = 'commentwrite/CHANGE_FIELD'; // 특정 key 값 바꾸기
 const [
   WRITE_COMMENT,
   WRITE_COMMENT_SUCCESS,
   WRITE_COMMENT_FAILURE,
-] = createRequestActionTypes('write/WRITE_COMMENT'); // 포스트 작성
-const REMOVE = 'comment/REMOVE';
-const SET_ORIGINAL_COMMENT = 'comment/SET_ORIGINAL_COMMENT';
+] = createRequestActionTypes('commentwrite/WRITE_COMMENT'); // 포스트 작성
+// const REMOVE = 'comment/REMOVE';
+const SET_ORIGINAL_COMMENT = 'commentwrite/SET_ORIGINAL_COMMENT';
 // const TOGGLE = 'comment/TOGGLE';
-const [
-  UPDATE_COMMENT,
-  UPDATE_COMMENT_SUCCESS,
-  UPDATE_COMMENT_FAILURE,
-] = createRequestActionTypes('write/UPDATE_COMMENT'); // 포스트 수정
+// const [
+//   UPDATE_COMMENT,
+//   UPDATE_COMMENT_SUCCESS,
+//   UPDATE_COMMENT_FAILURE,
+// ] = createRequestActionTypes('write/UPDATE_COMMENT'); // 포스트 수정
 
 export const initialize = createAction(INITIALIZE);
 export const changeField = createAction(CHANGE_FIELD, ({ key, value }) => ({
   key,
   value,
 }));
-export const writeComment = createAction(WRITE_COMMENT, ({ text }) => ({
-  text,
+export const writeComment = createAction(WRITE_COMMENT, ({ pk, content }) => ({
+  pk,
+  content,
 }));
 export const setOriginalComment = createAction(
   SET_ORIGINAL_COMMENT,
-  (text) => text,
+  (post) => post,
 );
-export const updateComment = createAction(UPDATE_COMMENT, ({ id, text }) => ({
-  id,
-  text,
-}));
+// export const updateComment = createAction(UPDATE_COMMENT, ({ id, text }) => ({
+//   id,
+//   text,
+// }));
 
 const writeCommentSaga = createRequestSaga(
   WRITE_COMMENT,
   postsAPI.writeCommnet,
 );
-const updatePostSaga = createRequestSaga(UPDATE_COMMENT, postsAPI);
+// const updatePostSaga = createRequestSaga(UPDATE_COMMENT, postsAPI);
 
 export function* commentWriteSaga() {
   yield takeLatest(WRITE_COMMENT, writeCommentSaga);
-  yield takeLatest(UPDATE_COMMENT, updatePostSaga);
+  // yield takeLatest(UPDATE_COMMENT, updatePostSaga);
 }
 
 const initialState = {
-  comment: '',
-
+  pk: 3,
+  content: '123',
+  post: null,
   selectComment: null,
   commentError: null,
 };
@@ -76,25 +78,25 @@ const commentwrite = handleActions(
       post,
     }),
     // 포스트 작성 실패
-    [WRITE_COMMENT_FAILURE]: (state, { payload: postError }) => ({
+    [WRITE_COMMENT_FAILURE]: (state, { payload: commentError }) => ({
       ...state,
-      postError,
+      commentError,
     }),
-    [SET_ORIGINAL_COMMENT]: (state, { payload: post }) => ({
-      ...state,
-      title: post.title,
-      body: post.body,
-      tags: post.tags,
-      originalPostId: post._id,
-    }),
-    [UPDATE_COMMENT_SUCCESS]: (state, { payload: comment }) => ({
-      ...state,
-      comment,
-    }),
-    [UPDATE_COMMENT_FAILURE]: (state, { payload: postError }) => ({
-      ...state,
-      postError,
-    }),
+    // [SET_ORIGINAL_COMMENT]: (state, { payload: post }) => ({
+    //   ...state,
+    //   title: post.title,
+    //   body: post.body,
+    //   tags: post.tags,
+    //   originalPostId: post._id,
+    // }),
+    // [UPDATE_COMMENT_SUCCESS]: (state, { payload: comment }) => ({
+    //   ...state,
+    //   comment,
+    // }),
+    // [UPDATE_COMMENT_FAILURE]: (state, { payload: postError }) => ({
+    //   ...state,
+    //   postError,
+    // }),
   },
   initialState,
 );

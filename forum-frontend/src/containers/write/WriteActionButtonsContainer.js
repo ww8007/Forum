@@ -50,7 +50,8 @@ const WriteActionButtonsContainer = ({ history, match }) => {
   useEffect(() => {
     if (post) {
       const { _id, user } = post;
-      history.push(`/@a/${_id}`);
+      console.log(_id);
+      history.push(`/board/post/1`);
     }
     if (postError) {
       console.log(postError);

@@ -29,7 +29,7 @@ const Wrapper = styled(Responsive)`
     font-size: 1.5rem;
     margin-left: -28rem;
   }
-  .box {
+  /* .box {
     position: fixed;
     top: 0;
     left: 0;
@@ -55,8 +55,8 @@ const Wrapper = styled(Responsive)`
       height: 1rem;
       display: none;
     }
-  }
-  .box:hover {
+  } */
+  /* .box:hover {
     h1 {
       display: inline-block;
     }
@@ -67,7 +67,7 @@ const Wrapper = styled(Responsive)`
     animation: first-ani 1s;
 
     animation-fill-mode: forwards;
-  }
+  } */
 
   @keyframes first-ani {
     0% {

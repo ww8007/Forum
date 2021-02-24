@@ -107,7 +107,7 @@ const PostItem = ({ post }) => {
   return (
     <PostItemBlock>
       <h2>
-        <Link to={`/board/post/${board}`}>{title}</Link>
+        <Link to={`/board/post/${post.pk}`}>{title}</Link>
       </h2>
       <p>
         제목 : {title} 작성자 : {username} 작성일 {postDate[0]}

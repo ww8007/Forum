@@ -10,26 +10,32 @@ import { removePost } from '../../lib/api/posts';
 const PostViewerContainer = ({ match, history }) => {
   // 처음 마운트될 때 포스트 읽기 API 요청
   const { postId } = match.params;
-  console.log('뷰어의 id : ', postId);
   const dispatch = useDispatch();
-  const { post, error, loading, user, comment, data } = useSelector(
-    ({ post, loading, user }) => ({
-      post: post.post,
-      error: post.error,
-      loading: loading['post/READ_POST'],
-      user: user.user,
-      data: post.data,
-    }),
-  );
+  const {
+    post,
+    error,
+    loading,
+    user,
+    comment,
+    data,
+    _postId,
+    postsdata,
+  } = useSelector(({ post, loading, user, posts }) => ({
+    post: post.post,
+    error: post.error,
+    loading: loading['post/READ_POST'],
+    user: user.user,
+    data: post.data,
+    _postId: post._postId,
+    postsdata: posts.postsdata,
+  }));
 
   useEffect(() => {
-    dispatch(readPost(postId));
     // 언마운트될 때 리덕스에서 포스트 데이터 없애기
-    console.log(postId);
     return () => {
-      dispatch(unloadPost());
+      // dispatch(unloadPost());
     };
-  }, [dispatch, postId]);
+  }, [dispatch, _postId]);
 
   const onEdit = () => {
     dispatch(setOriginalPost(post));
@@ -39,7 +45,7 @@ const PostViewerContainer = ({ match, history }) => {
   const onRemove = async () => {
     try {
       await removePost(postId);
-      console.log(postId);
+
       history.push('/');
     } catch (e) {
       console.log(e);
@@ -57,6 +63,7 @@ const PostViewerContainer = ({ match, history }) => {
         error={error}
         data={data}
         postId={postId}
+        postsdata={postsdata}
         actionButtons={
           <PostActionButtons onEdit={onEdit} onRemove={onRemove} />
         }

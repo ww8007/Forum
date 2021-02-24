@@ -48,11 +48,12 @@ const PostViewerBlock = styled(Responsive)`
   margin-top: 4rem;
 `;
 
-const PostCommentList = ({ user, comment, data }) => {
+const PostCommentList = ({ user, comment, data, onPublish }) => {
   const [text, setText] = useState('');
   const onSubmit = (e) => {
     e.preventDefault();
-
+    console.log('보내는 텍스트', text);
+    onPublish();
     setText('');
   };
   const onChange = (e) => {

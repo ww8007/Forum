@@ -50,9 +50,9 @@ export function* writeSaga() {
 }
 
 const initialState = {
-  title: '123',
+  title: '',
   pk: 1,
-  content: '123',
+  content: '',
 
   post: null,
   postError: null,

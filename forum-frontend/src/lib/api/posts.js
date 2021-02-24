@@ -16,15 +16,15 @@ export const writePost = ({ title, pk, content }) => {
   });
   return client.post('/post', queryString);
 };
-export const writeCommnet = ({ key, comment }) => {
+export const writeCommnet = ({ pk, contents }) => {
   const queryString = qs.stringify({
-    key,
-    comment,
+    pk,
+    contents,
   });
-  return client.post('/api/posts', queryString);
+  return client.post('/reply', queryString);
 };
 
-export const readComment = (id) => client.get(`reply?pk=${id}`);
+export const readComment = (id) => client.get(`/reply?pk=${id}`);
 
 export const readPost = (id) => client.get(`/post?pk=${id}`);
 

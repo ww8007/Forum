@@ -66,8 +66,8 @@ const PostCommentItem = ({
     setEdit(!edit);
   };
   console.log(comment);
-
-  const { username, writeAt, content } = comment.fields;
+  const { username } = comment.fields.author.fields;
+  const { writeAt, content } = comment.fields;
   const postDate = writeAt.split('T');
   return (
     <>

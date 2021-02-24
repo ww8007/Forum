@@ -7,7 +7,6 @@ import { readPost } from '../../modules/post';
 
 const PostListContainer = ({ match, history, location }) => {
   let { postId, commendId } = match.params;
-  console.log(postId, commendId);
   const dispatch = useDispatch();
   const {
     posts,
@@ -17,6 +16,7 @@ const PostListContainer = ({ match, history, location }) => {
     data,
     boards,
     post,
+    _postId,
     postsdata,
   } = useSelector(({ posts, loading, user, post }) => ({
     posts: posts.posts,
@@ -26,6 +26,7 @@ const PostListContainer = ({ match, history, location }) => {
     data: posts.data,
     boards: posts.boards,
     post: post.post,
+    _postId: post._postId,
     postsdata: posts.postsdata,
   }));
   //게시판 목록 불러오기
@@ -37,6 +38,8 @@ const PostListContainer = ({ match, history, location }) => {
     if (postId === undefined) {
       postId = 1;
     }
+
+    dispatch(readPost(postId));
     dispatch(listPosts(postId));
   }, [dispatch, postId]);
   useEffect(() => {

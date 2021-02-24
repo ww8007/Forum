@@ -1,5 +1,4 @@
 {
-
     "name": "forum-frontend",
     "version": "0.1.0",
     "private": true,
@@ -54,5 +53,5 @@
             "last 1 safari version"
         ]
     },
-    "proxy": "http://ec2-3-35-233-97.ap-northeast-2.compute.amazonaws.com"
+    "proxy": "http://localhost:80"
 }

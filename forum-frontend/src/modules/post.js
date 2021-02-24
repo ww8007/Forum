@@ -25,6 +25,7 @@ const initialState = {
   post: null,
   data: null,
   error: null,
+  _postId: null,
 };
 
 const post = handleActions(
