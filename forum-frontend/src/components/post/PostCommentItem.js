@@ -41,19 +41,18 @@ const Input = styled.input`
   line-height: 1.75;
 `;
 
-const PostCommentItem = ({
-  comment,
-
-  user,
-}) => {
+const PostCommentItem = ({ comment, onRemove, user }) => {
   const [text, setText] = useState('');
   const [edit, setEdit] = useState(false);
   const { id } = comment;
-
+  const { pk } = comment;
   const onChange = (e) => {
     setText(e.target.value);
   };
-
+  const onRemoveComment = () => {
+    console.log('pk값은', pk);
+    onRemove({ pk });
+  };
   const onSumbit = (e) => {
     e.preventDefault();
     // 내용이 비어있을 경우 경고 표시
@@ -65,9 +64,11 @@ const PostCommentItem = ({
     setText('');
     setEdit(!edit);
   };
-  console.log(comment);
+
+  const _id = pk;
   const { username } = comment.fields.author.fields;
   const { writeAt, content } = comment.fields;
+  console.log('comment pk', comment.pk);
   const postDate = writeAt.split('T');
   return (
     <>
@@ -98,7 +99,7 @@ const PostCommentItem = ({
               >
                 수정
               </ActionButton>
-              <ActionButton>삭제</ActionButton>
+              <ActionButton onClick={onRemoveComment}>삭제</ActionButton>
             </PostActionButtonBlock>
           </div>
         )}

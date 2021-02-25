@@ -48,12 +48,12 @@ const PostViewerBlock = styled(Responsive)`
   margin-top: 4rem;
 `;
 
-const PostCommentList = ({ user, comment, data, onPublish }) => {
-  const [text, setText] = useState('');
+const PostCommentList = ({ user, comment, data, onPublish, onRemove }) => {
+  const [content, setText] = useState('');
   const onSubmit = (e) => {
     e.preventDefault();
-    console.log('보내는 텍스트', text);
-    onPublish();
+
+    onPublish({ content });
     setText('');
   };
   const onChange = (e) => {
@@ -65,7 +65,7 @@ const PostCommentList = ({ user, comment, data, onPublish }) => {
         <form onSubmit={onSubmit}>
           <Input
             type="text"
-            value={text}
+            value={content}
             placeholder="댓글을 입력하세요"
             onChange={onChange}
           />
@@ -81,6 +81,7 @@ const PostCommentList = ({ user, comment, data, onPublish }) => {
             <PostCommentItem
               key={comment.pk}
               comment={comment}
+              onRemove={onRemove}
             ></PostCommentItem>
           ))}
         </div>

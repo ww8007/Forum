@@ -109,10 +109,11 @@ const PostItem = ({ post }) => {
       <h2>
         <Link to={`/board/post/${post.pk}`}>{title}</Link>
       </h2>
+
       <p>
-        제목 : {title} 작성자 : {username} 작성일 {postDate[0]}
+        작성자 : {username} 작성일 {postDate[0]}
       </p>
-      <span>{content}</span>
+      {/* <span>{content}</span> */}
       <br />
       <span>댓글 수 : {reply_length}</span>
     </PostItemBlock>

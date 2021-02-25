@@ -5,23 +5,30 @@ import client from './client';
 export const getBoard = (posts) => (posts = client.get(`/board`));
 
 // 글쓰기
-export const writePost1 = ({ title, pk, content }) =>
-  client.post('/post', qs.stringify({ title, pk, content }));
-// 댓글 쓰기
 export const writePost = ({ title, pk, content }) => {
   const queryString = qs.stringify({
     title,
     pk,
     content,
   });
+  console.log('postitem', queryString);
   return client.post('/post', queryString);
 };
-export const writeCommnet = ({ pk, contents }) => {
+
+// 댓글 쓰기
+export const writeCommnet = ({ pk, content }) => {
   const queryString = qs.stringify({
     pk,
-    contents,
+    content,
   });
+  console.log(('query', queryString));
   return client.post('/reply', queryString);
+};
+
+// 댓글 삭제하기
+export const deleteComment = (pk) => {
+  const queryString = qs.stringify(pk);
+  return client.delete('/reply', qs.stringify(pk));
 };
 
 export const readComment = (id) => client.get(`/reply?pk=${id}`);
