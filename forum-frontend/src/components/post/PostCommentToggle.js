@@ -5,15 +5,21 @@ import palette from '../../lib/styles/palette';
 import PostRecommentItem from './PostRecommentItem';
 const ToggleButton = styled.div`
   display: flex;
-  -webkit-box-align: center;
   align-items: center;
 
   font-weight: bold;
   font-size: 1.5rem;
   cursor: pointer;
+  box-sizing: border-box;
+  position: relative;
+  z-index: 2;
   span {
+    position: absolute;
+    top: 0;
+    left: 1.7rem;
     font-size: 1rem;
-    width: 20%;
+    text-align: center;
+    margin-bottom: 2px;
   }
 `;
 
@@ -49,9 +55,11 @@ const Button = styled.button`
 
 const PostCommentToggle = ({ comment, onRecomment }) => {
   const { recomment_id } = comment;
+  const { answer_reply_length } = comment;
   // const { id } = comment.recomments;
   const [set, onSet] = useState(false);
   const [text, setText] = useState('');
+  console.log('댓글의 명령 :', comment);
   const onSubmit = (e) => {
     e.preventDefault();
     onRecomment(text);
@@ -80,21 +88,27 @@ const PostCommentToggle = ({ comment, onRecomment }) => {
         {set ? (
           <span onClick={onClick}>숨기기</span>
         ) : (
-          <span onClick={onClick}>답글 달기</span>
+          <div>
+            {answer_reply_length === 0 ? (
+              <span onClick={onClick}>답글 달기</span>
+            ) : (
+              <span onClick={onClick}>{answer_reply_length}개의 댓글</span>
+            )}
+          </div>
         )}
       </ToggleButton>
       <br />
-      {/* <div>
-        {!set && comment.recomment_id !== 0
-          ? comment.recomments.map((recommnet) => (
-              <PostRecommentItem
-                key={recommnet.id}
-                recomment={recommnet}
-                onRecomment={onRecomment}
-              ></PostRecommentItem>
-            ))
-          : null}
-      </div> */}
+      {set && (
+        <form onSubmit={onSubmit}>
+          <Input
+            type="text"
+            value={text}
+            placeholder="답글을 입력하세요"
+            onChange={onChange}
+          ></Input>
+          <Button type={'submit'}>등록</Button>
+        </form>
+      )}
     </>
   );
 };

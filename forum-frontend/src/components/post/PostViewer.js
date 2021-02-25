@@ -58,7 +58,7 @@ const PostViewer = ({
   }
 
   // 로딩중이거나, 아직 포스트 데이터가 없을 시
-  if (loading || !post) {
+  if (loading || !postsdata) {
     return null;
   }
   const new_id = postId - 1;

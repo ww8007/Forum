@@ -44,7 +44,7 @@ const Input = styled.input`
 const PostCommentItem = ({ comment, onRemove, user }) => {
   const [text, setText] = useState('');
   const [edit, setEdit] = useState(false);
-  const { id } = comment;
+
   const { pk } = comment;
   const onChange = (e) => {
     setText(e.target.value);
@@ -65,7 +65,6 @@ const PostCommentItem = ({ comment, onRemove, user }) => {
     setEdit(!edit);
   };
 
-  const _id = pk;
   const { username } = comment.fields.author.fields;
   const { writeAt, content } = comment.fields;
   console.log('comment pk', comment.pk);
