@@ -21,6 +21,13 @@ const ToggleButton = styled.div`
     text-align: center;
     margin-bottom: 2px;
   }
+  p {
+    position: absolute;
+    top: -2rem;
+    left: 0;
+    width: 100%;
+    display: hidden;
+  }
 `;
 
 const Input = styled.input`
@@ -83,15 +90,15 @@ const PostCommentToggle = ({
   onClickRe,
   recommentdata,
   onWriteRecomment,
+  onReadComment,
 }) => {
-  console.log(comment);
   const { pk } = comment;
   const { answer_reply_length } = comment;
   // const { id } = comment.recomments;
   const [set, onSet] = useState(false);
   const [setRe, onSetRe] = useState(false);
   const [text, setText] = useState('');
-  console.log('댓글의 명령 :', comment);
+
   const onSubmit = (e) => {
     e.preventDefault();
     onRecomment(text);
@@ -108,55 +115,65 @@ const PostCommentToggle = ({
   };
   const onClick = () => {
     onSet(!set);
+    let id = pk;
+    onClickRe({ id });
   };
   const onClick2 = () => {
     onSetRe(!setRe);
   };
   const onClickrecomment = () => {
-    console.log('pk:', pk);
     let id = pk;
     onClickRe({ id });
   };
+  const onRead = () => {
+    let id = pk;
+    onReadComment({ id });
+  };
+
   return (
     <>
-      <ToggleButton>
-        {set ? (
-          <AiOutlineMinusSquare
-            onClick={onClick}
-            color="#22b8cf"
-          ></AiOutlineMinusSquare>
-        ) : (
-          <AiOutlinePlusSquare
-            onClick={onClick}
-            color="#22b8cf"
-          ></AiOutlinePlusSquare>
-        )}
-        {set ? (
-          <span onClick={onClick}>숨기기</span>
-        ) : (
-          <div>
-            {answer_reply_length === 0 ? (
-              <span onClick={onClick}>답글 달기</span>
-            ) : (
-              <span onClick={onClickrecomment}>
-                {answer_reply_length}개의 댓글
-              </span>
-            )}
-          </div>
-        )}
-      </ToggleButton>
+      <>
+        <ToggleButton>
+          {set ? (
+            <AiOutlineMinusSquare
+              onClick={onClick}
+              color="#22b8cf"
+            ></AiOutlineMinusSquare>
+          ) : (
+            <AiOutlinePlusSquare
+              onClick={onClick}
+              color="#22b8cf"
+            ></AiOutlinePlusSquare>
+          )}
+
+          {set ? (
+            <span onClick={onClick}>숨기기</span>
+          ) : (
+            <div>
+              {answer_reply_length === 0 ? (
+                <span onClick={onClick}>답글 달기</span>
+              ) : (
+                <span onClick={onClick}>{answer_reply_length}개의 댓글</span>
+              )}
+            </div>
+          )}
+        </ToggleButton>
+      </>
       <br />
-      {set && answer_reply_length === 0 && (
-        <form onSubmit={onSubmit}>
+      {set && answer_reply_length === 0 ? (
+        <form onSubmit={onSubmitRe}>
           <Input
             type="text"
             value={text}
             placeholder="답글을 입력하세요"
             onChange={onChange}
           ></Input>
-          <Button type={'submit'}>등록</Button>
+          <Button type={'submit'} onClick={onRead}>
+            {console.log('대댓글 개수 :', comment)}
+            등록
+          </Button>
         </form>
-      )}
+      ) : null}
       {set && answer_reply_length !== 0 && (
         <>
           <RecommentBlock>

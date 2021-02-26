@@ -57,6 +57,7 @@ const PostCommentList = ({
   onClickRe,
   recommentdata,
   onWriteRecomment,
+  onReadComment,
 }) => {
   const [content, setText] = useState('');
   const onSubmit = (e) => {
@@ -95,6 +96,7 @@ const PostCommentList = ({
               onClickRe={onClickRe}
               recommentdata={recommentdata}
               onWriteRecomment={onWriteRecomment}
+              onReadComment={onReadComment}
             ></PostCommentItem>
           ))}
         </div>

@@ -68,6 +68,7 @@ const RegisterForm = ({ history }) => {
 
     if (auth) {
       console.log('회원가입 성공');
+      history.push('/');
       console.log(auth);
     }
   }, [auth, authError, dispatch, user]);

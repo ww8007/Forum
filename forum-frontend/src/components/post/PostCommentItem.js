@@ -48,6 +48,7 @@ const PostCommentItem = ({
   onClickRe,
   recommentdata,
   onWriteRecomment,
+  onReadComment,
 }) => {
   const [text, setText] = useState('');
   const [edit, setEdit] = useState(false);
@@ -115,6 +116,7 @@ const PostCommentItem = ({
           onClickRe={onClickRe}
           recommentdata={recommentdata}
           onWriteRecomment={onWriteRecomment}
+          onReadComment={onReadComment}
         />
         <br />
       </div>

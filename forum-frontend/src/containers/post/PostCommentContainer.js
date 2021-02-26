@@ -38,16 +38,26 @@ const PostCommentContainer = ({ match }) => {
       dispatch(unloadComment());
     };
   }, [dispatch, pk, content, postId]);
-
+  const onReadComment = ({ id }) => {
+    dispatch(readComment(id));
+  };
   // 댓글 쓰기
   const onPublish = ({ content }) => {
     dispatch(writeComment({ pk, content }));
     //댓글 읽어오기
-    dispatch(readComment(postId));
+    const id = pk;
+    dispatch(readComment(id));
+    dispatch(readComment(id));
+    dispatch(readComment(id));
   };
   const onWriteRecomment = ({ pk, content }) => {
     dispatch(writeReComment({ pk, content }));
-    dispatch(readRecomment(pk));
+    const id = pk;
+
+    dispatch(readRecomment(id));
+    dispatch(readRecomment(id));
+    dispatch(readRecomment(id));
+    dispatch(readComment(postId));
   };
   // 대댓글 읽어오기
   const onClickRe = ({ id }) => {
@@ -70,6 +80,7 @@ const PostCommentContainer = ({ match }) => {
       postId={postId}
       data={data}
       user={user}
+      onReadComment={onReadComment}
       recommentdata={recommentdata}
       onWriteRecomment={onWriteRecomment}
       onClickRe={onClickRe}
