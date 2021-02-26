@@ -12,7 +12,12 @@ const [
   WRITE_COMMENT,
   WRITE_COMMENT_SUCCESS,
   WRITE_COMMENT_FAILURE,
-] = createRequestActionTypes('commentwrite/WRITE_COMMENT'); // 포스트 작성
+] = createRequestActionTypes('commentwrite/WRITE_COMMENT'); // 댓글 작성
+const [
+  WRITE_RECOMMENT,
+  WRITE_RECOMMENT_SUCCESS,
+  WRITE_RECOMMENT_FAILURE,
+] = createRequestActionTypes('commentwrite/WRITE_RECOMMENT'); // 댓글 작성
 // const REMOVE = 'comment/REMOVE';
 const SET_ORIGINAL_COMMENT = 'commentwrite/SET_ORIGINAL_COMMENT';
 // const TOGGLE = 'comment/TOGGLE';
@@ -31,6 +36,13 @@ export const writeComment = createAction(WRITE_COMMENT, ({ pk, content }) => ({
   pk,
   content,
 }));
+export const writeReComment = createAction(
+  WRITE_RECOMMENT,
+  ({ pk, content }) => ({
+    pk,
+    content,
+  }),
+);
 export const setOriginalComment = createAction(
   SET_ORIGINAL_COMMENT,
   (post) => post,
@@ -45,9 +57,13 @@ const writeCommentSaga = createRequestSaga(
   postsAPI.writeCommnet,
 );
 // const updatePostSaga = createRequestSaga(UPDATE_COMMENT, postsAPI);
-
+const wrtieRecommentSaga = createRequestSaga(
+  WRITE_RECOMMENT,
+  postsAPI.writeReCommnet,
+);
 export function* commentWriteSaga() {
   yield takeLatest(WRITE_COMMENT, writeCommentSaga);
+  yield takeLatest(WRITE_RECOMMENT, wrtieRecommentSaga);
   // yield takeLatest(UPDATE_COMMENT, updatePostSaga);
 }
 
@@ -79,6 +95,15 @@ const commentwrite = handleActions(
     }),
     // 포스트 작성 실패
     [WRITE_COMMENT_FAILURE]: (state, { payload: commentError }) => ({
+      ...state,
+      commentError,
+    }),
+    [WRITE_RECOMMENT_SUCCESS]: (state, { payload: post }) => ({
+      ...state,
+      post,
+    }),
+    // 포스트 작성 실패
+    [WRITE_RECOMMENT_FAILURE]: (state, { payload: commentError }) => ({
       ...state,
       commentError,
     }),

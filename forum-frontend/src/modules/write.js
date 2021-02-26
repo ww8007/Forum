@@ -73,7 +73,7 @@ const write = handleActions(
       postError: null,
     }),
     // 포스트 작성 성공
-    [WRITE_POST_SUCCESS]: (state, { payload: post }) => ({
+    [WRITE_POST_SUCCESS]: (state, { payload: post, meta: response }) => ({
       ...state,
       post,
     }),

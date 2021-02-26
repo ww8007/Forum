@@ -74,7 +74,7 @@ const post = handleActions(
     }),
     [READ_RECOMMENT_SUUCCESS]: (state, { payload: recomment }) => ({
       ...state,
-      redata: recomment.data,
+      recommentdata: recomment.data,
       recomment,
     }),
     [READ_RECOMMENT_FAILURE]: (state, { payload: error }) => ({

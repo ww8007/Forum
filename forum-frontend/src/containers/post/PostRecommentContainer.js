@@ -19,14 +19,12 @@ const PostRecommentContainer = ({ id }) => {
     // dispatch(readPost(postId));
     // 언마운트될 때 리덕스에서 포스트 데이터 없애기
     dispatch(initialize());
-
+    dispatch(readRecomment(id));
     return () => {
       dispatch(initialize());
     };
   }, [dispatch]);
-  const onClickRe = () => {
-    dispatch(readRecomment(id));
-  };
+  const onClickRe = () => {};
   return <PostRecommentItem></PostRecommentItem>;
 };
 

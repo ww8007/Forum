@@ -45,6 +45,7 @@ const Button = styled.button`
   padding: 0.25rem 1rem;
   color: white;
   outline: none;
+
   cursor: pointer;
   background: ${palette.cyan[5]};
   &:hover {
@@ -52,12 +53,43 @@ const Button = styled.button`
   }
   float: right;
 `;
+const Button2 = styled.button`
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  font-weight: bold;
+  padding: 0.25rem 1rem;
+  width: 100%;
+  color: white;
+  margin-bottom: 2rem;
+  outline: none;
+  cursor: pointer;
+  background: ${palette.cyan[5]};
+  &:hover {
+    background: ${palette.cyan[4]};
+  }
+`;
+const RecommentBlock = styled.div`
+  border: 1px solid rgba(0, 0, 0, 0.02);
+  background-color: rgba(0, 0, 0, 0.016);
+  padding: 1.5rem;
+  border-radius: 10px;
+  margin-top: 1.3125rem;
+`;
 
-const PostCommentToggle = ({ comment, onRecomment }) => {
-  const { recomment_id } = comment;
+const PostCommentToggle = ({
+  comment,
+  onRecomment,
+  onClickRe,
+  recommentdata,
+  onWriteRecomment,
+}) => {
+  console.log(comment);
+  const { pk } = comment;
   const { answer_reply_length } = comment;
   // const { id } = comment.recomments;
   const [set, onSet] = useState(false);
+  const [setRe, onSetRe] = useState(false);
   const [text, setText] = useState('');
   console.log('댓글의 명령 :', comment);
   const onSubmit = (e) => {
@@ -65,11 +97,25 @@ const PostCommentToggle = ({ comment, onRecomment }) => {
     onRecomment(text);
     setText('');
   };
+  const onSubmitRe = (e) => {
+    e.preventDefault();
+    const content = text;
+    onWriteRecomment({ pk, content });
+    setText('');
+  };
   const onChange = (e) => {
     setText(e.target.value);
   };
   const onClick = () => {
     onSet(!set);
+  };
+  const onClick2 = () => {
+    onSetRe(!setRe);
+  };
+  const onClickrecomment = () => {
+    console.log('pk:', pk);
+    let id = pk;
+    onClickRe({ id });
   };
   return (
     <>
@@ -92,13 +138,15 @@ const PostCommentToggle = ({ comment, onRecomment }) => {
             {answer_reply_length === 0 ? (
               <span onClick={onClick}>답글 달기</span>
             ) : (
-              <span onClick={onClick}>{answer_reply_length}개의 댓글</span>
+              <span onClick={onClickrecomment}>
+                {answer_reply_length}개의 댓글
+              </span>
             )}
           </div>
         )}
       </ToggleButton>
       <br />
-      {set && (
+      {set && answer_reply_length === 0 && (
         <form onSubmit={onSubmit}>
           <Input
             type="text"
@@ -108,6 +156,30 @@ const PostCommentToggle = ({ comment, onRecomment }) => {
           ></Input>
           <Button type={'submit'}>등록</Button>
         </form>
+      )}
+      {set && answer_reply_length !== 0 && (
+        <>
+          <RecommentBlock>
+            {recommentdata.map((recomment) => (
+              <PostRecommentItem
+                key={recomment.pk}
+                recomment={recomment}
+              ></PostRecommentItem>
+            ))}
+          </RecommentBlock>
+          <Button2 onClick={onClick2}>{setRe ? '숨기기' : '답글달기'}</Button2>
+          {setRe && (
+            <form onSubmit={onSubmitRe}>
+              <Input
+                type="text"
+                value={text}
+                placeholder="답글을 입력하세요"
+                onChange={onChange}
+              ></Input>
+              <Button type={'submit'}>등록</Button>
+            </form>
+          )}
+        </>
       )}
     </>
   );

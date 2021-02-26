@@ -48,7 +48,16 @@ const PostViewerBlock = styled(Responsive)`
   margin-top: 4rem;
 `;
 
-const PostCommentList = ({ user, comment, data, onPublish, onRemove }) => {
+const PostCommentList = ({
+  user,
+  comment,
+  data,
+  onPublish,
+  onRemove,
+  onClickRe,
+  recommentdata,
+  onWriteRecomment,
+}) => {
   const [content, setText] = useState('');
   const onSubmit = (e) => {
     e.preventDefault();
@@ -77,11 +86,15 @@ const PostCommentList = ({ user, comment, data, onPublish, onRemove }) => {
         <br />
 
         <div>
+          {console.log('data: ', data)}
           {data.map((comment) => (
             <PostCommentItem
               key={comment.pk}
               comment={comment}
               onRemove={onRemove}
+              onClickRe={onClickRe}
+              recommentdata={recommentdata}
+              onWriteRecomment={onWriteRecomment}
             ></PostCommentItem>
           ))}
         </div>

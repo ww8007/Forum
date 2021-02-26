@@ -41,7 +41,14 @@ const Input = styled.input`
   line-height: 1.75;
 `;
 
-const PostCommentItem = ({ comment, onRemove, user }) => {
+const PostCommentItem = ({
+  comment,
+  onRemove,
+  user,
+  onClickRe,
+  recommentdata,
+  onWriteRecomment,
+}) => {
   const [text, setText] = useState('');
   const [edit, setEdit] = useState(false);
 
@@ -103,7 +110,12 @@ const PostCommentItem = ({ comment, onRemove, user }) => {
           </div>
         )}
 
-        <PostCommentToggle comment={comment} />
+        <PostCommentToggle
+          comment={comment}
+          onClickRe={onClickRe}
+          recommentdata={recommentdata}
+          onWriteRecomment={onWriteRecomment}
+        />
         <br />
       </div>
     </>

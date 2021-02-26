@@ -49,9 +49,11 @@ const WriteActionButtonsContainer = ({ history, match }) => {
   // 성공 혹은 실패시 할 작업
   useEffect(() => {
     if (post) {
+      console.log('포스트', post);
+      console.log('크기', post.data);
       const { _id, user } = post;
       console.log(_id);
-      history.push(`/board/post/1`);
+      history.push(`/`);
     }
     if (postError) {
       console.log(postError);

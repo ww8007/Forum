@@ -69,16 +69,16 @@ const RegisterForm = ({ history }) => {
     if (auth) {
       console.log('회원가입 성공');
       console.log(auth);
-      dispatch(check(user));
     }
   }, [auth, authError, dispatch, user]);
 
   // user 값이 잘 설정되었는지 확인
   useEffect(() => {
-    if (user) {
+    const { username } = form;
+    if (username) {
       history.push('/'); // 홈 화면으로 이동
       try {
-        localStorage.setItem('user', JSON.stringify(user));
+        localStorage.setItem('user', JSON.stringify(username));
       } catch (e) {
         console.log('localStorage is not working');
       }
