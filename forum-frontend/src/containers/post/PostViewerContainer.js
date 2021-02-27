@@ -54,10 +54,11 @@ const PostViewerContainer = ({ match, history }) => {
 
   const ownPost = (PostId) => {
     if (PostId === user) {
-      dispatch();
+      console.log('goooooooooood');
     }
   };
-
+  const ownThing = user && user._id;
+  console.log('mything', ownThing);
   // const ownPost = (user) === (post && postsdata.user._id);
   // const ownComment = (user && user._id) === (post && post.user_id);
 
@@ -70,6 +71,7 @@ const PostViewerContainer = ({ match, history }) => {
         data={data}
         postId={postId}
         postsdata={postsdata}
+        ownPost={ownPost}
         actionButtons={
           <PostActionButtons onEdit={onEdit} onRemove={onRemove} />
         }

@@ -45,6 +45,7 @@ const PostViewer = ({
   data,
   postId,
   postsdata,
+  ownPost,
 }) => {
   // 에러 발생 시
   if (error) {
@@ -64,6 +65,7 @@ const PostViewer = ({
   const new_id = postId - 1;
   const { title, content, writeAt } = postsdata[new_id].fields;
   const { reply_length } = postsdata[new_id];
+  ownPost(postsdata[postId - 1].fields.author.fields.username);
   console.log('hi', postsdata[postId - 1].fields.author.fields.username);
   return (
     <PostViewerBlock>
