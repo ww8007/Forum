@@ -33,7 +33,7 @@ const PostViewerContainer = ({ match, history }) => {
   useEffect(() => {
     // 언마운트될 때 리덕스에서 포스트 데이터 없애기
     return () => {
-      // dispatch(unloadPost());
+      dispatch(unloadPost());
     };
   }, [dispatch, _postId]);
 
@@ -52,7 +52,13 @@ const PostViewerContainer = ({ match, history }) => {
     }
   };
 
-  // const ownPost = (user && user._id) === (post && post.user._id);
+  const ownPost = (PostId) => {
+    if (PostId === user) {
+      dispatch();
+    }
+  };
+
+  // const ownPost = (user) === (post && postsdata.user._id);
   // const ownComment = (user && user._id) === (post && post.user_id);
 
   return (

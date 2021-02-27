@@ -64,7 +64,7 @@ const PostViewer = ({
   const new_id = postId - 1;
   const { title, content, writeAt } = postsdata[new_id].fields;
   const { reply_length } = postsdata[new_id];
-
+  console.log('hi', postsdata[postId - 1].fields.author.fields.username);
   return (
     <PostViewerBlock>
       <PostHead>

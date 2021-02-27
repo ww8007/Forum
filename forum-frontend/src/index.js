@@ -17,13 +17,15 @@ const store = createStore(
   composeWithDevTools(applyMiddleware(sagaMiddleware)),
 );
 
+// local Stroage에 저장된 user 불러와 "" 제거
 function loadUser() {
   try {
     const user = localStorage.getItem('user');
     if (!user) return;
     console.log('localuser is : ', user);
-    store.dispatch(tempSetUser(user));
-    store.dispatch(check());
+    const _id = user.toString().replace(/"/g, '');
+    store.dispatch(tempSetUser(_id));
+    store.dispatch(check(_id));
   } catch (e) {
     console.log('Storage is not working');
   }

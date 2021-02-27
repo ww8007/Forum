@@ -1,36 +1,36 @@
-import { handleActions, createAction } from 'redux-actions';
+import { createAction, handleActions } from 'redux-actions';
 import { takeLatest, call } from 'redux-saga/effects';
-import * as api from '../lib/api/auth';
+import * as authAPI from '../lib/api/auth';
 import createRequestSaga, {
   createRequestActionTypes,
 } from '../lib/createRequestSaga';
 
-const TEMP_SET_USER = 'user/TEMP_SET_USER';
-// 회원정보 확인
-
+const TEMP_SET_USER = 'user/TEMP_SET_USER'; // 새로고침 이후 임시 로그인 처리
+// 회원 정보 확인
 const [CHECK, CHECK_SUCCESS, CHECK_FAILURE] = createRequestActionTypes(
   'user/CHECK',
 );
 const LOGOUT = 'user/LOGOUT';
 
 export const tempSetUser = createAction(TEMP_SET_USER, (user) => user);
-export const check = createAction(CHECK);
+export const check = createAction(CHECK, (user) => user);
 export const logout = createAction(LOGOUT);
 
-const checkSaga = createRequestSaga(CHECK, api.check);
+const checkSaga = createRequestSaga(CHECK, authAPI.check);
 
 function checkFailureSaga() {
   try {
-    localStorage.removeItem('user'); //브라우저에서 유저 제거
+    console.log('hihih');
+    localStorage.removeItem('user'); // localStorage 에서 user 제거하고
   } catch (e) {
     console.log('localStorage is not working');
   }
 }
 
-export function* logoutSaga() {
+function* logoutSaga() {
   try {
-    yield call(api.logout);
-    localStorage.removeItem('user');
+    yield call(authAPI.logout); // logout API 호출
+    localStorage.removeItem('user'); // localStorage 에서 user 제거
   } catch (e) {
     console.log(e);
   }
@@ -43,23 +43,20 @@ export function* userSaga() {
 }
 
 const initialState = {
+  data: null,
   user: null,
   checkError: null,
 };
 
 export default handleActions(
   {
-    // [CHECK]: (state, { payload: user }) => ({
-    //   ...state,
-    //   user,
-    // }),
     [TEMP_SET_USER]: (state, { payload: user }) => ({
       ...state,
       user,
     }),
-    [CHECK_SUCCESS]: (state, { payload: user }) => ({
+    [CHECK_SUCCESS]: (state, { payload: data }) => ({
       ...state,
-      user,
+      user: data.data.fields.username,
       checkError: null,
     }),
     [CHECK_FAILURE]: (state, { payload: error }) => ({
