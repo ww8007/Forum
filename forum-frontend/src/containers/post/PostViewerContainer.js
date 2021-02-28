@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { readPost, unloadPost } from '../../modules/post';
@@ -9,6 +9,7 @@ import { removePost } from '../../lib/api/posts';
 
 const PostViewerContainer = ({ match, history }) => {
   // 처음 마운트될 때 포스트 읽기 API 요청
+  const [check, onCheck] = useState(false);
   const { postId } = match.params;
   const dispatch = useDispatch();
   const {
@@ -54,9 +55,10 @@ const PostViewerContainer = ({ match, history }) => {
 
   const ownPost = (PostId) => {
     if (PostId === user) {
-      console.log('goooooooooood');
+      onCheck(true);
     }
   };
+  console.log('myPOst =', check);
   const ownThing = user && user._id;
   console.log('mything', ownThing);
   // const ownPost = (user) === (post && postsdata.user._id);
@@ -73,7 +75,11 @@ const PostViewerContainer = ({ match, history }) => {
         postsdata={postsdata}
         ownPost={ownPost}
         actionButtons={
-          <PostActionButtons onEdit={onEdit} onRemove={onRemove} />
+          <PostActionButtons
+            onEdit={onEdit}
+            onRemove={onRemove}
+            check={check}
+          />
         }
       />
     </>

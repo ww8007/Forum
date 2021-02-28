@@ -27,7 +27,7 @@ const ActionButton = styled.div`
     margin-left: 0.25rem;
   }
 `;
-const PostActionButtons = ({ onEdit, onRemove }) => {
+const PostActionButtons = ({ onEdit, onRemove, check }) => {
   const [modal, setModal] = useState(false);
   const onRemoveClick = () => {
     setModal(true);
@@ -40,18 +40,23 @@ const PostActionButtons = ({ onEdit, onRemove }) => {
 
     onRemove();
   };
- 
+
   return (
     <>
-      <PostActionButtonBlock>
-        <ActionButton onClick={onEdit}>수정</ActionButton>
-        <ActionButton onClick={onRemoveClick}>삭제</ActionButton>
-      </PostActionButtonBlock>
-      <AskRemoveModal
-        visible={modal}
-        onConfirm={onConfirm}
-        onCancle={onCancle}
-      ></AskRemoveModal>
+      {console.log('hihihi', check)}
+      {check && (
+        <>
+          <PostActionButtonBlock>
+            <ActionButton onClick={onEdit}>수정</ActionButton>
+            <ActionButton onClick={onRemoveClick}>삭제</ActionButton>
+          </PostActionButtonBlock>
+          <AskRemoveModal
+            visible={modal}
+            onConfirm={onConfirm}
+            onCancle={onCancle}
+          ></AskRemoveModal>
+        </>
+      )}
     </>
   );
 };

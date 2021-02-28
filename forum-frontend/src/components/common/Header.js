@@ -90,9 +90,10 @@ const Header = ({ user, onLogout, onClick, boards, data }) => {
           <MenuList to="/">FORUM</MenuList>
           <MenuList to="/login">BOARD</MenuList>
           <MenuList to="/board/1">Q&A</MenuList>
+
           {user ? (
             <div className="right">
-              <UserInfo>{user.username}</UserInfo>
+              <UserInfo>{user}</UserInfo>
               <Button cyan onClick={onLogout}>
                 로그아웃
               </Button>
