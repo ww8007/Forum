@@ -58,9 +58,7 @@ const PostViewerContainer = ({ match, history }) => {
       onCheck(true);
     }
   };
-  console.log('myPOst =', check);
-  const ownThing = user && user._id;
-  console.log('mything', ownThing);
+
   // const ownPost = (user) === (post && postsdata.user._id);
   // const ownComment = (user && user._id) === (post && post.user_id);
 

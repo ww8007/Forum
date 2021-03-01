@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import palette from '../../lib/styles/palette';
 import PostRecommentItem from './PostRecommentItem';
 const ToggleButton = styled.div`
-  display: flex;
+  display: block;
   align-items: center;
 
   font-weight: bold;
@@ -91,6 +91,7 @@ const PostCommentToggle = ({
   recommentdata,
   onWriteRecomment,
   onReadComment,
+  user,
 }) => {
   const { pk } = comment;
   const { answer_reply_length } = comment;
@@ -181,10 +182,15 @@ const PostCommentToggle = ({
               <PostRecommentItem
                 key={recomment.pk}
                 recomment={recomment}
+                user={user}
               ></PostRecommentItem>
             ))}
           </RecommentBlock>
-          <Button2 onClick={onClick2}>{setRe ? '숨기기' : '답글달기'}</Button2>
+          {user && (
+            <Button2 onClick={onClick2}>
+              {setRe ? '숨기기' : '답글달기'}
+            </Button2>
+          )}
           {setRe && (
             <form onSubmit={onSubmitRe}>
               <Input

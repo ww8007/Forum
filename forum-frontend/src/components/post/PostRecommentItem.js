@@ -4,12 +4,18 @@ import styled from 'styled-components';
 import palette from '../../lib/styles/palette';
 const RecommentBlock = styled.div``;
 
-const PostActionButtonBlock = styled.div`
+const ReCommentBlock = styled.span`
   display: flex;
-  justify-content: flex-end;
-  margin-bottom: 2rem;
-  margin-top: -1.5rem;
-  width: 100%;
+  justify-content: flex-start;
+
+  div {
+    display: flex;
+    justify-content: flex-end;
+
+    margin-top: -1.5rem;
+    width: 100%;
+    margin-bottom: 2rem;
+  }
 `;
 const Button = styled.button`
   border: none;
@@ -35,6 +41,8 @@ const ActionButton = styled.button`
   border: none;
   outline: none;
   font-size: 0.875rem;
+  display: flex;
+  justify-content: flex-end;
   cursor: pointer;
   &:hover {
     background: ${palette.gray[1]};
@@ -59,7 +67,7 @@ const Input = styled.input`
   line-height: 1.75;
 `;
 
-const PostRecommentItem = ({ recomment, onRecomment }) => {
+const PostRecommentItem = ({ recomment, onRecomment, user }) => {
   const { id } = recomment;
   const [text, setText] = useState('');
   const [edit, setEdit] = useState(false);
@@ -79,8 +87,11 @@ const PostRecommentItem = ({ recomment, onRecomment }) => {
     setText('');
     setEdit(!edit);
   };
-
+  // username 불러오기
   const { username } = recomment.fields.author.fields;
+  // 자신이 쓴 대댓글인지 확인
+  const ownRecomment = user === username;
+  console.log('this is own', ownRecomment);
   const { writeAt, content } = recomment.fields;
   const postDate = writeAt.split('T');
   // const onSubmit = (e) => {
@@ -89,7 +100,8 @@ const PostRecommentItem = ({ recomment, onRecomment }) => {
   //   setText('');
   // };
   return (
-    <RecommentBlock>
+    <>
+      {console.log(recomment)}
       {/* <AiOutlineArrowRight className="box"></AiOutlineArrowRight> */}
       <div>
         {/* 댓글 정보 */}
@@ -101,29 +113,38 @@ const PostRecommentItem = ({ recomment, onRecomment }) => {
         {edit && (
           <form onSubmit={onSumbit}>
             <Input value={text} onChange={onChange}></Input>
-            <PostActionButtonBlock>
+            <ReCommentBlock>
               <ActionButton type={'submit'}>등록</ActionButton>
               <ActionButton>취소</ActionButton>
-            </PostActionButtonBlock>
+            </ReCommentBlock>
           </form>
         )}
         {edit || (
           <div>
-            {content}
-            <PostActionButtonBlock>
-              <ActionButton
-                onClick={() => {
-                  setEdit(!edit);
-                }}
-              >
-                수정
-              </ActionButton>
-              <ActionButton>삭제</ActionButton>
-            </PostActionButtonBlock>
+            <ReCommentBlock>{content}</ReCommentBlock>
+            {/* 댓글 user와 같은지 확인하여 수정 삭제 가능 불가능 결정 */}
+            {ownRecomment ? (
+              <>
+                <ReCommentBlock>
+                  <div>
+                    <ActionButton
+                      onClick={() => {
+                        setEdit(!edit);
+                      }}
+                    >
+                      수정
+                    </ActionButton>
+                    <ActionButton>삭제</ActionButton>
+                  </div>
+                </ReCommentBlock>
+              </>
+            ) : (
+              <div>&nbsp;&nbsp;</div>
+            )}
           </div>
         )}
       </div>
-    </RecommentBlock>
+    </>
   );
 };
 

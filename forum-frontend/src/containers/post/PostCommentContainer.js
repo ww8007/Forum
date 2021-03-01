@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import {
   deleteComment,
@@ -14,6 +14,7 @@ import {
   writeReComment,
 } from '../../modules/commentwrite';
 const PostCommentContainer = ({ match }) => {
+  const [check, onCheck] = useState(false);
   const { postId } = match.params;
   const { comment, data, user, content, pk, recommentdata } = useSelector(
     ({ comment, user, commentwrite }) => ({
@@ -61,7 +62,6 @@ const PostCommentContainer = ({ match }) => {
   };
   // 대댓글 읽어오기
   const onClickRe = ({ id }) => {
-    console.log('id값은', id);
     dispatch(readRecomment(id));
   };
   // // 댓글 삭제하기
@@ -69,6 +69,13 @@ const PostCommentContainer = ({ match }) => {
   const onRemove = ({}) => {
     console.log('댓글 삭제 pk:');
     dispatch(deleteComment({}));
+  };
+
+  const ownComment = (postId) => {
+    if (postId === user) {
+      onCheck(true);
+      return true;
+    }
   };
 
   return (
@@ -84,6 +91,7 @@ const PostCommentContainer = ({ match }) => {
       recommentdata={recommentdata}
       onWriteRecomment={onWriteRecomment}
       onClickRe={onClickRe}
+      ownComment={ownComment}
     ></PostCommentList>
   );
 };
